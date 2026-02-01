@@ -145,6 +145,41 @@ width: 14px;
 height: 14px;
 border-radius: 4px;
 }
+/* Gyors navigációs sáv */
+.quick-nav {
+display: flex;
+gap: 8px;
+overflow-x: auto;
+padding: 10px 16px;
+background: white;
+border-radius: 12px;
+box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+margin-bottom: 24px;
+-webkit-overflow-scrolling: touch;
+scrollbar-width: none;
+}
+.quick-nav::-webkit-scrollbar { display: none; }
+.quick-nav-btn {
+display: flex;
+align-items: center;
+gap: 6px;
+padding: 8px 14px;
+border-radius: 20px;
+border: 1.5px solid #e0e0e0;
+background: #fafafa;
+cursor: pointer;
+white-space: nowrap;
+font-size: 0.82em;
+color: #444;
+font-weight: 500;
+transition: all 0.2s;
+}
+.quick-nav-btn:hover {
+border-color: #A0714F;
+background: #f5ebe3;
+color: #A0714F;
+}
+.quick-nav-btn .qn-icon { font-size: 1.2em; }
 .category-icon {
 font-size: 1.8em;
 }
@@ -297,6 +332,15 @@ padding: 10px;
 .quick-fact-value {
 font-size: 1.3em;
 }
+.quick-nav {
+padding: 8px 10px;
+gap: 6px;
+margin-bottom: 16px;
+}
+.quick-nav-btn {
+padding: 7px 10px;
+font-size: 0.78em;
+}
 }
 .quick-facts {
 display: grid;
@@ -337,6 +381,16 @@ font-weight: bold;
 <div class="legend-item"><div class="legend-dot" style="background:#2E7D5E;"></div> Egyéni vállalkozó</div>
 <div class="legend-item"><div class="legend-dot" style="background:#3B6BA5;"></div> Társaság (Kft/Bt/Rt)</div>
 <div class="legend-item"><div class="legend-dot" style="background:#C17F24;"></div> Munkaügyi</div>
+</div>
+<div class="quick-nav">
+<button class="quick-nav-btn" onclick="quickNav('Minimálbér')"><span class="qn-icon">💰</span> Minimálbér</button>
+<button class="quick-nav-btn" onclick="quickNav('Járulékok')"><span class="qn-icon">⚖️</span> Járulékok</button>
+<button class="quick-nav-btn" onclick="quickNav('SZJA')"><span class="qn-icon">📋</span> SZJA</button>
+<button class="quick-nav-btn" onclick="quickNav('ÁFA')"><span class="qn-icon">🧾</span> ÁFA</button>
+<button class="quick-nav-btn" onclick="quickNav('TAO')"><span class="qn-icon">🏛️</span> TAO</button>
+<button class="quick-nav-btn" onclick="quickNav('KATA')"><span class="qn-icon">💼</span> KATA</button>
+<button class="quick-nav-btn" onclick="quickNav('Munkaszüneti')"><span class="qn-icon">📅</span> Munkaszüneti</button>
+<button class="quick-nav-btn" onclick="quickNav('Szabadság')"><span class="qn-icon">🏖️</span> Szabadság</button>
 </div>
 <div class="category-grid">
 <!-- Minimálbér és Bérek -->
@@ -2287,6 +2341,19 @@ c.classList.remove('active');
 // Toggle current card
 if (!isActive) {
 card.classList.add('active');
+}
+}
+function quickNav(keyword) {
+const cards = document.querySelectorAll('.category-card');
+for (const card of cards) {
+const h2 = card.querySelector('h2');
+if (h2 && h2.textContent.includes(keyword)) {
+// Close all, open this
+document.querySelectorAll('.category-card').forEach(c => c.classList.remove('active'));
+card.classList.add('active');
+card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+break;
+}
 }
 }
 // Megakadályozzuk a tartalom kattintásának bubble-álását a card-ra
