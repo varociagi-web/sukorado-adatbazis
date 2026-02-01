@@ -43,19 +43,40 @@ padding: 20px;
 border-radius: 15px;
 box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 margin-bottom: 30px;
+position: relative;
 }
 .search-input {
 width: 100%;
-padding: 15px 20px;
+padding: 15px 45px 15px 20px;
 font-size: 1.1em;
 border: 2px solid #e0e0e0;
 border-radius: 10px;
 transition: all 0.3s;
+box-sizing: border-box;
 }
 .search-input:focus {
 outline: none;
 border-color: #A0714F;
 box-shadow: 0 0 0 3px rgba(160, 113, 79, 0.15);
+}
+#search-clear {
+display: none;
+position: absolute;
+right: 32px;
+top: 50%;
+transform: translateY(-50%);
+background: none;
+border: none;
+font-size: 1.3em;
+color: #999;
+cursor: pointer;
+padding: 4px 8px;
+border-radius: 50%;
+line-height: 1;
+}
+#search-clear:hover {
+color: #A0714F;
+background: #f0f0f0;
 }
 .category-grid {
 display: grid;
@@ -87,13 +108,39 @@ gap: 10px;
 font-size: 1.8em;
 }
 .category-content {
-display: none;
-margin-top: 15px;
-padding-top: 15px;
-border-top: 2px solid #f0f0f0;
+display: block;
+max-height: 0;
+overflow: hidden;
+margin-top: 0;
+padding-top: 0;
+border-top: 2px solid transparent;
+transition: max-height 0.4s ease, margin-top 0.3s ease, padding-top 0.3s ease, border-color 0.3s ease;
 }
 .category-card.active .category-content {
-display: block;
+max-height: 10000px;
+margin-top: 15px;
+padding-top: 15px;
+border-color: #f0f0f0;
+}
+#felul-gomb {
+display: none;
+position: fixed;
+bottom: 24px;
+right: 24px;
+width: 48px;
+height: 48px;
+border-radius: 50%;
+background: #A0714F;
+color: white;
+border: none;
+font-size: 1.4em;
+cursor: pointer;
+box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+z-index: 999;
+transition: opacity 0.3s, transform 0.2s;
+}
+#felul-gomb:hover {
+transform: scale(1.1);
 }
 .data-item {
 padding: 12px;
@@ -191,6 +238,7 @@ font-weight: bold;
 </header>
 <div class="search-box">
 <input type="text" class="search-input" id="searchInput" placeholder="🔍 Keresés az adatok között... (pl. minimálbér, SZJA, KATA)">
+<button id="search-clear" onclick="document.getElementById('searchInput').value=''; document.getElementById('searchInput').dispatchEvent(new Event('input'));">✕</button>
 </div>
 <div class="category-grid">
 <!-- Minimálbér és Bérek -->
@@ -355,28 +403,6 @@ font-weight: bold;
 <div class="data-label">KATA havi összeg</div>
 <div class="data-value">50 000 Ft/hó</div>
 <div class="data-note">Ellátási alap: 108 000 Ft/hó</div>
-</div>
-<div class="alert-box">
-<strong>📋 Főfoglalkozású KATA-s járulékfizetés</strong>
-</div>
-<div class="data-item">
-<div class="data-label">Főfoglalkozású - minimálbér után</div>
-<div class="data-value">101 682 Ft/hó</div>
-<div class="data-note">ebből társ.bizt.járulék (18,5%): 59 718 Ft<br>
-ebből szocho (13%): 41 964 Ft</div>
-</div>
-<div class="data-item">
-<div class="data-label">Főfoglalkozású - gar.bérminimum után</div>
-<div class="data-value">117 558 Ft/hó</div>
-<div class="data-note">ebből társ.bizt.járulék (18,5%): 69 042 Ft<br>
-ebből szocho (13%): 48 516 Ft</div>
-</div>
-<div class="alert-box">
-<strong>⚠️ Mellékállású vagy nyugdíjas KATA-s:</strong> 0 Ft járulékfizetés
-</div>
-<div class="data-item">
-<div class="data-label">Rehabilitációs hozzájárulás</div>
-<div class="data-value">2 905 200 Ft/fő/év</div>
 </div>
 </div>
 </div>
@@ -2106,34 +2132,53 @@ képletText.textContent = '20 000 000 / 365 × ' + aktivNapok + ' = ' + arányos
 }
 function toggleSubSection(id) {
 const section = document.getElementById(id);
+// Keressük a trigger div-et (az előző testvér)
+const trigger = section.previousElementSibling;
+const arrow = trigger ? trigger.querySelector('.data-label span:last-child') : null;
 if (section.style.display === 'none') {
 section.style.display = 'block';
+if (arrow) arrow.textContent = '▲';
 } else {
 section.style.display = 'none';
+if (arrow) arrow.textContent = '▼';
 }
 }
 // Search functionality
 const searchInput = document.getElementById('searchInput');
+const searchClear = document.getElementById('search-clear');
 searchInput.addEventListener('input', function(e) {
 const searchTerm = e.target.value.toLowerCase();
+searchClear.style.display = searchTerm.length > 0 ? 'block' : 'none';
+let firstMatch = null;
 document.querySelectorAll('.category-card').forEach(card => {
 const text = card.textContent.toLowerCase();
 if (text.includes(searchTerm)) {
 card.style.display = 'block';
 if (searchTerm.length > 2) {
 card.classList.add('active');
+if (!firstMatch) firstMatch = card;
 }
 } else {
 card.style.display = 'none';
 }
 });
-// If search is empty, show all cards
 if (searchTerm === '') {
 document.querySelectorAll('.category-card').forEach(card => {
 card.style.display = 'block';
 card.classList.remove('active');
 });
+} else if (firstMatch) {
+setTimeout(() => { firstMatch.scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 150);
 }
+});
+// --- FELÜL GOMB ---
+const felulGomb = document.createElement('button');
+felulGomb.id = 'felul-gomb';
+felulGomb.innerHTML = '↑';
+felulGomb.onclick = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+document.body.appendChild(felulGomb);
+window.addEventListener('scroll', () => {
+felulGomb.style.display = (window.scrollY > 400) ? 'block' : 'none';
 });
 </script>
 </body>
