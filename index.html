@@ -1,0 +1,1525 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Könyvelői Adatbázis 2026</title>
+<style>
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+body {
+font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+background: linear-gradient(135deg, #A0714F 0%, #7A4F2E 100%);
+padding: 20px;
+min-height: 100vh;
+}
+.container {
+max-width: 1400px;
+margin: 0 auto;
+}
+header {
+background: white;
+padding: 25px;
+border-radius: 15px;
+box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+margin-bottom: 30px;
+text-align: center;
+}
+h1 {
+color: #A0714F;
+font-size: 2.5em;
+margin-bottom: 10px;
+}
+.subtitle {
+color: #666;
+font-size: 1.1em;
+}
+.search-box {
+background: white;
+padding: 20px;
+border-radius: 15px;
+box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+margin-bottom: 30px;
+}
+.search-input {
+width: 100%;
+padding: 15px 20px;
+font-size: 1.1em;
+border: 2px solid #e0e0e0;
+border-radius: 10px;
+transition: all 0.3s;
+}
+.search-input:focus {
+outline: none;
+border-color: #A0714F;
+box-shadow: 0 0 0 3px rgba(160, 113, 79, 0.15);
+}
+.category-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+gap: 20px;
+margin-bottom: 30px;
+}
+.category-card {
+background: white;
+border-radius: 15px;
+padding: 25px;
+cursor: pointer;
+transition: all 0.3s;
+box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+.category-card:hover {
+transform: translateY(-5px);
+box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+.category-card h2 {
+color: #A0714F;
+font-size: 1.5em;
+margin-bottom: 15px;
+display: flex;
+align-items: center;
+gap: 10px;
+}
+.category-icon {
+font-size: 1.8em;
+}
+.category-content {
+display: none;
+margin-top: 15px;
+padding-top: 15px;
+border-top: 2px solid #f0f0f0;
+}
+.category-card.active .category-content {
+display: block;
+}
+.data-item {
+padding: 12px;
+margin: 8px 0;
+background: #f8f9fa;
+border-radius: 8px;
+border-left: 4px solid #A0714F;
+transition: all 0.2s;
+}
+.data-item:hover {
+background: #f5ebe3;
+transform: translateX(5px);
+}
+.data-label {
+font-weight: 600;
+color: #333;
+margin-bottom: 5px;
+}
+.data-value {
+color: #A0714F;
+font-size: 1.2em;
+font-weight: bold;
+}
+.data-note {
+color: #666;
+font-size: 0.9em;
+margin-top: 5px;
+}
+.table-container {
+overflow-x: auto;
+margin-top: 15px;
+}
+table {
+width: 100%;
+border-collapse: collapse;
+background: white;
+}
+th, td {
+padding: 12px;
+text-align: left;
+border-bottom: 1px solid #e0e0e0;
+}
+th {
+background: #A0714F;
+color: white;
+font-weight: 600;
+}
+tr:hover {
+background: #f8f9fa;
+}
+.alert-box {
+background: #fff3cd;
+border-left: 4px solid #ffc107;
+padding: 15px;
+border-radius: 8px;
+margin: 10px 0;
+}
+@media (max-width: 768px) {
+.category-grid {
+grid-template-columns: 1fr;
+}
+h1 {
+font-size: 1.8em;
+}
+}
+.quick-facts {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+gap: 15px;
+margin: 15px 0;
+}
+.quick-fact {
+background: linear-gradient(135deg, #A0714F 0%, #7A4F2E 100%);
+color: white;
+padding: 20px;
+border-radius: 10px;
+text-align: center;
+}
+.quick-fact-label {
+font-size: 0.9em;
+opacity: 0.9;
+margin-bottom: 8px;
+}
+.quick-fact-value {
+font-size: 1.5em;
+font-weight: bold;
+}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+<h1>📊 MI MENNYI 2026-BAN?</h1>
+<p class="subtitle">Könyvelői adatbázis - Minden adat egy helyen</p>
+</header>
+<div class="search-box">
+<input type="text" class="search-input" id="searchInput" placeholder="🔍 Keresés az adatok között... (pl. minimálbér, SZJA, KATA)">
+</div>
+<div class="category-grid">
+<!-- Minimálbér és Bérek -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">💰</span> Minimálbér & Garantált bérminimum</h2>
+<div class="category-content">
+<div class="quick-facts">
+<div class="quick-fact">
+<div class="quick-fact-label">Minimálbér</div>
+<div class="quick-fact-value">322 800 Ft</div>
+</div>
+<div class="quick-fact">
+<div class="quick-fact-label">Garantált bérmin.</div>
+<div class="quick-fact-value">373 200 Ft</div>
+</div>
+</div>
+<div class="data-item">
+<div class="data-label">Minimálbér (bruttó)</div>
+<div class="data-value">322 800 Ft/hó</div>
+<div class="data-note">Heti: 74 210 Ft | Napi: 14 850 Ft | Órabér: 1 856 Ft</div>
+</div>
+<div class="data-item">
+<div class="data-label">Garantált bérminimum (bruttó)</div>
+<div class="data-value">373 200 Ft/hó</div>
+<div class="data-note">Heti: 85 800 Ft | Napi: 17 160 Ft | Órabér: 2 145 Ft</div>
+</div>
+<div class="data-item">
+<div class="data-label">Minimális órabér (minimálbér × 85%)</div>
+<div class="data-value">1 578 Ft</div>
+<div class="data-note">Mentesített keretösszeg (napi bér 130%-a): 19 305 Ft</div>
+</div>
+<div class="data-item">
+<div class="data-label">Garantált bérmin. órabér (87%)</div>
+<div class="data-value">1 866 Ft</div>
+<div class="data-note">Mentesített keretösszeg (napi bér 130%-a): 22 308 Ft</div>
+</div>
+<div class="data-item">
+<div class="data-label">TAO által elismert max. költség</div>
+<div class="data-value">29 700 Ft/nap</div>
+<div class="data-note">Minimálbér napi összege × 2</div>
+</div>
+</div>
+</div>
+<!-- SZJA és Adók -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">📋</span> SZJA & Általános adók</h2>
+<div class="category-content">
+<div class="data-item">
+<div class="data-label">SZJA</div>
+<div class="data-value">15%</div>
+</div>
+<div class="data-item">
+<div class="data-label">Társadalombiztosítási járulék</div>
+<div class="data-value">18,5%</div>
+</div>
+<div class="data-item">
+<div class="data-label">Nyugdíjjárulék (pl. GYED, GYES)</div>
+<div class="data-value">10%</div>
+</div>
+<div class="data-item">
+<div class="data-label">Szociális hozzájárulási adó (szocho)</div>
+<div class="data-value">13%</div>
+</div>
+<div class="alert-box">
+<strong>⚠️ Szocho felső határ:</strong> 7 747 200 Ft/év
+</div>
+<div class="data-item">
+<div class="data-label">Személyi kedvezmény</div>
+<div class="data-value">Teljes adóalap × 15%</div>
+<div class="data-note">Max/hó: 715 765 Ft (max adókedvezmény: 107 365 Ft)</div>
+</div>
+<div class="data-item">
+<div class="data-label">Adómentes munkabér előleg (max)</div>
+<div class="data-value">38 700 Ft</div>
+</div>
+</div>
+</div>
+<!-- Családi kedvezmények -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">👨‍👩‍👧‍👦</span> Családi kedvezmények</h2>
+<div class="category-content">
+<div class="alert-box">
+<strong>📋 SZJA kedvezmények érvényesíthetőségi sorrendben:</strong><br>
+1. Személyi kedvezmény<br>
+2. Első házasok kedvezménye<br>
+3. Családi kedvezmény (gyerekenként)<br>
+4. 25 év alatti fiatalok kedvezménye<br>
+5. 30 év alatti anyák kedvezménye<br>
+6. 2, 3, 4 vagy több gyermeket nevelő anyák<br>
+7. CSED, GYED, ÖFD kedvezménye
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Gyermekek száma</th>
+<th>Havi kedvezmény (Ft)</th>
+<th>Adókedvezmény</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 gyerek</td>
+<td><strong>133 340 Ft</strong></td>
+<td>20 000 Ft</td>
+</tr>
+<tr>
+<td>2 gyerek</td>
+<td><strong>266 660 Ft</strong></td>
+<td>39 999 Ft</td>
+</tr>
+<tr>
+<td>3 vagy több gyerek</td>
+<td><strong>440 000 Ft/fő</strong></td>
+<td>66 000 Ft</td>
+</tr>
+<tr>
+<td>Tartósan beteg gyerek</td>
+<td><strong>133 340 Ft</strong></td>
+<td>20 000 Ft</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="data-item">
+<div class="data-label">Első házasok kedvezménye</div>
+<div class="data-value">Max/hó: 33 335 Ft</div>
+<div class="data-note">Adókedvezmény: 5 000 Ft</div>
+</div>
+<div class="data-item">
+<div class="data-label">25 év alatti fiatalok kedvezménye</div>
+<div class="data-value">Max/hó: 107 600 Ft</div>
+<div class="data-note">Adókedvezmény: 16 140 Ft (levont SZJA előlegből)</div>
+</div>
+<div class="data-item">
+<div class="data-label">30 év alatti anyák kedvezménye</div>
+<div class="data-value">Max/hó/gyerek: 133 340 Ft</div>
+<div class="data-note">Adókedvezmény: 20 000 Ft</div>
+</div>
+<div class="data-item">
+<div class="data-label">Családi pótlék</div>
+<div class="data-value">12 200-17 000 Ft/gyerek/hó</div>
+<div class="data-note">1 gyermekes család: 12 200 Ft/hó | egyedülálló: 13 700 Ft/hó<br>
+2 gyermekes család: 13 300 Ft/hó | egyedülálló: 14 800 Ft/hó<br>
+3 vagy többgyermekes család: 16 000 Ft/hó | egyedülálló: 17 000 Ft/hó</div>
+</div>
+<div class="data-item">
+<div class="data-label">Tartósan beteg, súlyosan fogyatékos gyermeket nevelő</div>
+<div class="data-value">23 300 Ft/hó (család) | 25 900 Ft/hó (egyedülálló)</div>
+</div>
+<div class="data-item">
+<div class="data-label">Tartósan beteg, súlyosan fogyatékos nagykorú személy</div>
+<div class="data-value">20 300 Ft/hó</div>
+</div>
+</div>
+</div>
+<!-- KATA -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">💼</span> KATA (Kisadózó)</h2>
+<div class="category-content">
+<div class="data-item">
+<div class="data-label">KATA havi összeg</div>
+<div class="data-value">50 000 Ft/hó</div>
+<div class="data-note">Ellátási alap: 108 000 Ft/hó</div>
+</div>
+<div class="alert-box">
+<strong>📋 Főfoglalkozású KATA-s járulékfizetés</strong>
+</div>
+<div class="data-item">
+<div class="data-label">Főfoglalkozású - minimálbér után</div>
+<div class="data-value">101 682 Ft/hó</div>
+<div class="data-note">ebből társ.bizt.járulék (18,5%): 59 718 Ft<br>
+ebből szocho (13%): 41 964 Ft</div>
+</div>
+<div class="data-item">
+<div class="data-label">Főfoglalkozású - gar.bérminimum után</div>
+<div class="data-value">117 558 Ft/hó</div>
+<div class="data-note">ebből társ.bizt.járulék (18,5%): 69 042 Ft<br>
+ebből szocho (13%): 48 516 Ft</div>
+</div>
+<div class="alert-box">
+<strong>⚠️ Mellékállású vagy nyugdíjas KATA-s:</strong> 0 Ft járulékfizetés
+</div>
+<div class="data-item">
+<div class="data-label">Rehabilitációs hozzájárulás</div>
+<div class="data-value">2 905 200 Ft/fő/év</div>
+</div>
+</div>
+</div>
+<!-- EKHO -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">🎯</span> EKHO (Egyszerűsített közteher)</h2>
+<div class="category-content">
+<div class="data-item">
+<div class="data-label">EKHO éves bevételi határ (általános)</div>
+<div class="data-value">60 000 000 Ft/év</div>
+</div>
+<div class="alert-box">
+<strong>⚠️ Feltétel:</strong> Legalább éves minimálbért elérő, általános szabály szerint adózó jövedelem (3 873 600 Ft)<br>
+- Összegtől függetlenül biztosított lesz a megbízott
+</div>
+<div class="data-item">
+<div class="data-label">EKHO mérték</div>
+<div class="data-value">15%</div>
+<div class="data-note">Tartós megbízási jogviszony 2026.01.01-től (új fogalom)</div>
+</div>
+</div>
+</div>
+<!-- Egyszerűsített foglalkoztatás -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">⚡</span> Egyszerűsített foglalkoztatás (EFO)</h2>
+<div class="category-content">
+<div class="alert-box">
+<strong>👥 1 magánszemély max 120 nap/év</strong><br>
+Max egybefüggő 5 nap | Max. havi 15 nap
+</div>
+<div class="alert-box">
+<strong>📊 EFO - Egyszerűsített foglalkoztatás fajtái (minimálbér %-ában)</strong>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Foglalkoztatás fajtája</th>
+<th>Min.bér %-a</th>
+<th>Ft/nap</th>
+<th>Megjegyzés</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Alkalmi munka</td>
+<td>1,50%</td>
+<td><strong>4 800 Ft</strong></td>
+<td>Vonatkozik rá a járulék</td>
+</tr>
+<tr>
+<td>Turisztikai idénymunka</td>
+<td>0,75%</td>
+<td><strong>2 400 Ft</strong></td>
+<td>-</td>
+</tr>
+<tr>
+<td>Mezőgazd. idénymunka (0-120 nap)</td>
+<td>0,75%</td>
+<td><strong>2 400 Ft</strong></td>
+<td>Előre be kell jelenteni</td>
+</tr>
+<tr>
+<td>Mezőgazd. idénymunka (121-210 nap)</td>
+<td>1,125%</td>
+<td><strong>3 600 Ft</strong></td>
+<td>Foglalkoztató döntésétől függ, ellátás 15%-a</td>
+</tr>
+<tr>
+<td>Filmipari statiszta</td>
+<td>3,00%</td>
+<td><strong>9 700 Ft</strong></td>
+<td>Lehet folyamatosan fennálló megbízás, attól nem kell tartósnak minősíteni</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="alert-box">
+<strong>📊 EFO közteher - Egyszerűsített foglalkoztatás fajtája szerint</strong>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Foglalkoztatás fajtája</th>
+<th>Min.bér %-ában</th>
+<th>Ft/nap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Alkalmi munka</td>
+<td>4,2%</td>
+<td><strong>13 600 Ft</strong></td>
+</tr>
+<tr>
+<td>Turisztikai idénymunka</td>
+<td>2,1%</td>
+<td><strong>6 800 Ft</strong></td>
+</tr>
+<tr>
+<td>Mezőgazd. idénymunka (0-120 nap)</td>
+<td>2,1%</td>
+<td><strong>6 800 Ft</strong></td>
+</tr>
+<tr>
+<td>Mezőgazd. idénymunka (121-210 nap)</td>
+<td>3,15%</td>
+<td><strong>10 200 Ft</strong></td>
+</tr>
+<tr>
+<td>Filmipari statiszta</td>
+<td>8,4%</td>
+<td><strong>27 100 Ft</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="alert-box">
+<strong>🔍 EFO korlátok és létszámok:</strong><br>
+• Foglalkoztató éves létszámkorlátja (1. és 7. hónap megelőző 6 havi létszám szerint)<br>
+• 300 eFt-ot meghaladó adótartozás: EFO közteher + szocho + rehab.hozzájár. + levont SZJA előleg
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Foglalkoztató létszáma</th>
+<th>Max. létszám/nap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>&lt; 1 fő</td>
+<td>1 fő naponta</td>
+</tr>
+<tr>
+<td>1-5 fő</td>
+<td>2 fő naponta</td>
+</tr>
+<tr>
+<td>6-20 fő</td>
+<td>4 fő naponta</td>
+</tr>
+<tr>
+<td>20 fő felett</td>
+<td>létszám × 20%</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="alert-box">
+<strong>⚠️ Létszámkorlát NEM vonatkozik:</strong> Szociális szövetkezet, Filmipari statiszta
+</div>
+<div class="alert-box">
+<strong>🆕 Új szabály 2026.01.01-től!</strong><br>
+Tartós megbízási jogviszony új fogalom. Kizárólag mezőgazdasági idénymunka esetén a magánszemély 120 napja + 90 nappal meghosszabbítható.
+</div>
+<div class="data-item">
+<div class="data-label">Filmipari statiszta max. napidíj</div>
+<div class="data-value">38 700 Ft</div>
+<div class="data-note">Minimálbér × 12%, 100 Ft-ra kerekítve</div>
+</div>
+</div>
+</div>
+<!-- Átalányadózás -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">📊</span> Átalányadózás</h2>
+<div class="category-content">
+<div class="alert-box">
+<strong>📊 Átalányadózókat érintő összegek</strong>
+</div>
+<div class="data-item">
+<div class="data-label">Éves bevételi határ</div>
+<div class="data-value">38 736 000 Ft</div>
+</div>
+<div class="data-item">
+<div class="data-label">Csak kiskereskedelem esetén</div>
+<div class="data-value">193 680 000 Ft</div>
+</div>
+<div class="data-item">
+<div class="data-label">Adómentes bevétel</div>
+<div class="data-value">1 936 800 Ft</div>
+<div class="data-note">(nincs arányosítás)</div>
+</div>
+<div class="alert-box">
+<strong>📋 Költséghányad szerinti bevételi határok</strong>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Költséghányad</th>
+<th>Bevételi határ</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>45% ktghányad</td>
+<td><strong>3 521 455 Ft</strong></td>
+</tr>
+<tr>
+<td>80% ktghányad</td>
+<td><strong>9 684 000 Ft</strong></td>
+</tr>
+<tr>
+<td>90% ktghányad</td>
+<td><strong>19 368 000 Ft</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="alert-box">
+<strong>💰 Fizetendő közteher adómentes jövedelem esetén</strong><br>
+(vagy felette a minimum fizetendő járulék havonta)
+</div>
+<div class="data-item">
+<div class="data-label">"Mellékállású" v. nyugdíjas EV</div>
+<div class="data-value">0 Ft</div>
+</div>
+<div class="data-item">
+<div class="data-label">Főfoglalkozású - minimálbér után</div>
+<div class="data-value">101 682 Ft</div>
+<div class="data-note">ebből társ.bizt.jár. (18,5%): 59 718 Ft<br>
+ebből szocho (13%): 41 964 Ft</div>
+</div>
+<div class="data-item">
+<div class="data-label">Főfoglalkozású - gar.bérminimum után</div>
+<div class="data-value">117 558 Ft</div>
+<div class="data-note">ebből társ.bizt.jár. (18,5%): 69 042 Ft<br>
+ebből szocho (13%): 48 516 Ft</div>
+</div>
+<div class="alert-box">
+<strong>⚠️ Adómentes jövedelem felett a járulékalap a göngyölítéses módszer alapján kerül meghatározásra!</strong>
+</div>
+<div class="alert-box">
+<strong>📋 Egyéni vállalkozók 2658-as bevallási gyakorisága:</strong><br>
+MINDENKI-re negyedéves (kivéve soron kívüli)
+</div>
+</div>
+</div>
+<!-- Önkéntes pénztárak -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">🏦</span> Önkéntes pénztárak</h2>
+<div class="category-content">
+<div class="alert-box">
+<strong>💼 Adómentes juttatás önkéntes pénztárakba</strong>
+</div>
+<div class="data-item">
+<div class="data-label">Önkéntes nyugdíjpénztárba</div>
+<div class="data-value">1 200 000 Ft/év/fő</div>
+</div>
+<div class="data-item">
+<div class="data-label">Önkéntes önsegélyező pénztárba (pl. ÖNYP, GYES)</div>
+<div class="data-value">650 000 Ft/év/fő</div>
+</div>
+<div class="data-item">
+<div class="data-label">Célzott szolgáltatás egészségpénztárba</div>
+<div class="data-value">Korlátozás nélkül</div>
+</div>
+</div>
+</div>
+<!-- KIVA -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">🏢</span> KIVA</h2>
+<div class="category-content">
+<div class="data-item">
+<div class="data-label">KIVA mértéke</div>
+<div class="data-value">10%</div>
+</div>
+</div>
+</div>
+<!-- ÁFA -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">🧾</span> ÁFA</h2>
+<div class="category-content">
+<div class="data-item">
+<div class="data-label">ÁFA alanyi mentesség határa</div>
+<div class="data-value">20 000 000 Ft/év</div>
+</div>
+<!-- Arányosítási kalkulátor -->
+<div style="background: linear-gradient(135deg, #A0714F 0%, #7A4F2E 100%); padding: 18px; border-radius: 10px; margin: 10px 0;">
+<div style="color: white; font-weight: bold; font-size: 1.05em; margin-bottom: 12px;">🧮 Alanyi mentes keret arányosítási kalkulátor</div>
+<div style="color: rgba(255,255,255,0.85); font-size: 0.85em; margin-bottom: 10px;">Év közben induló vállalkozás esetén a 20M Ft-os keret arányos része jár: 20 000 000 / 365 × aktív napok</div>
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+<label style="color: white; font-size: 0.9em; white-space: nowrap;">Vállalkozás indulási napja:</label>
+<input type="date" id="afa-indulas-dátum"
+style="padding: 8px 12px; border: none; border-radius: 6px; font-size: 1em; flex: 1; min-width: 180px; max-width: 220px;"
+min="2026-01-01" max="2026-12-31"
+onchange="számolÁFA()" oninput="számolÁFA()">
+</div>
+<div id="afa-eredmeny" style="margin-top: 14px; display: none;">
+<div style="background: rgba(255,255,255,0.15); border-radius: 8px; padding: 12px;">
+<div style="color: rgba(255,255,255,0.8); font-size: 0.82em; margin-bottom: 4px;" id="afa-napok-text"></div>
+<div style="color: white; font-size: 1.4em; font-weight: bold;" id="afa-keret-value"></div>
+<div style="color: rgba(255,255,255,0.7); font-size: 0.8em; margin-top: 4px;" id="afa-képlet-text"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Iparűzési adó -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">🏭</span> Helyi iparűzési adó (HIPA)</h2>
+<div class="category-content">
+<div class="alert-box">
+<strong>📋 A helyi adók rendszerében az önkormányzatok által a leginkább állandó jelleggel alkalmazott közteher.</strong>
+</div>
+<div class="data-item">
+<div class="data-label">Adókötelezettség</div>
+<div class="data-value">Székhely vagy telephely alapján</div>
+<div class="data-note">Helyi iparűzési adót köteles fizetni az a vállalkozó, akinek a székhelye vagy a telephelye az adott önkormányzat területén található, és ott vállalkozási (iparűzési) tevékenységet folytat részben vagy egészben.</div>
+</div>
+<div class="data-item">
+<div class="data-label">Adóköteles tevékenység</div>
+<div class="data-value">Nyereség-, ill. jövedelemszerzésre irányuló</div>
+<div class="data-note">A vállalkozó által ilyen minőségben végzett nyereség-, illetőleg jövedelemszerzésre irányuló tevékenysége.</div>
+</div>
+<div class="data-item">
+<div class="data-label">Adó maximális mértéke</div>
+<div class="data-value">Az adóalap 2%-a</div>
+<div class="data-note">Az önkormányzatok saját döntésük alapján eltérhetnek ettől. Az önkormányzatok által bevezetett összes helyi adóról a Magyar Államkincstár vezet nyilvántartást.</div>
+</div>
+<div class="alert-box">
+<strong>📅 Bevallási és fizetési határidők:</strong>
+</div>
+<div class="data-item">
+<div class="data-label">Helyi iparűzésiadó-előleg</div>
+<div class="data-value">Március 15. és Szeptember 15.</div>
+<div class="data-note">Évente kétszer kell megfizetni</div>
+</div>
+<div class="data-item">
+<div class="data-label">Helyi iparűzésiadó bevallás és adó megfizetése</div>
+<div class="data-value">Május 31.</div>
+<div class="data-note">Az adóévet követő év május 31-ig</div>
+</div>
+<div class="alert-box">
+<strong>🆕 Egyszerűsített IPA (max 25M Ft éves bevétel) – sávosan differenciált:</strong>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Bevételi határok</th>
+<th>Adóalap</th>
+<th>Adó (max 2%)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0 < 12 000 000 Ft</td>
+<td>2 500 000 Ft</td>
+<td><strong>50 000 Ft</strong></td>
+</tr>
+<tr>
+<td>12 000 000 < 18 000 000 Ft</td>
+<td>6 000 000 Ft</td>
+<td><strong>120 000 Ft</strong></td>
+</tr>
+<tr>
+<td>18 000 000 < 25 000 000 Ft</td>
+<td>8 500 000 Ft</td>
+<td><strong>170 000 Ft</strong></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Járulékok általános -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">⚖️</span> Járulékok & Közteher</h2>
+<div class="category-content">
+<!-- BÉRKALKULATOR -->
+<div style="background: linear-gradient(135deg, #A0714F 0%, #7A4F2E 100%); padding: 18px; border-radius: 10px; margin: 10px 0;">
+<div style="color: white; font-weight: bold; font-size: 1.05em; margin-bottom: 4px;">🧮 Bérkalkulator</div>
+<div style="color: rgba(255,255,255,0.8); font-size: 0.82em; margin-bottom: 14px;">Bruttó bér alapján kiszámítja a levont járulékokat és a munkáltatókat terhelő adót</div>
+<!-- Inputs -->
+<div style="display: flex; flex-direction: column; gap: 10px;">
+<!-- Óraszám és minimálbér sor -->
+<div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end;">
+<div style="flex: 1; min-width: 130px;">
+<label style="color: rgba(255,255,255,0.85); font-size: 0.8em;">Heti óraszám</label>
+<input type="number" id="bk-ora" value="40" min="1" max="40" step="1"
+style="width: 100%; padding: 8px 10px; border: none; border-radius: 6px; font-size: 1em; margin-top: 3px;"
+oninput="bérkalkResetBruttó()">
+</div>
+<div style="flex: 1; min-width: 160px;">
+<label style="color: rgba(255,255,255,0.85); font-size: 0.8em;">Arányos minimálbér</label>
+<div id="bk-arányos-minbér" style="background: rgba(255,255,255,0.15); color: white; padding: 8px 10px; border-radius: 6px; font-size: 0.95em; margin-top: 3px; font-weight: bold;"></div>
+</div>
+</div>
+<!-- Bruttó bér -->
+<div>
+<label style="color: rgba(255,255,255,0.85); font-size: 0.8em;">Bruttó bér (Ft/hó) – felírható kéziesen is</label>
+<input type="number" id="bk-brutto" value="322800" min="0" step="100"
+style="width: 100%; padding: 8px 10px; border: none; border-radius: 6px; font-size: 1.1em; margin-top: 3px; font-weight: bold;"
+oninput="bérkalkSzámol()">
+</div>
+<!-- TAO / KIVA toggle -->
+<div style="display: flex; gap: 8px; margin-top: 2px;">
+<button id="bk-btn-tao" onclick="bérkalkSetTárs('tao')"
+style="flex: 1; padding: 7px; border: 2px solid white; border-radius: 6px; background: white; color: #A0714F; font-weight: bold; font-size: 0.88em; cursor: pointer;">
+TAO cég → 13% szocho
+</button>
+<button id="bk-btn-kiva" onclick="bérkalkSetTárs('kiva')"
+style="flex: 1; padding: 7px; border: 2px solid rgba(255,255,255,0.4); border-radius: 6px; background: transparent; color: white; font-weight: bold; font-size: 0.88em; cursor: pointer;">
+KIVA cég → 10% KIVA
+</button>
+</div>
+</div>
+<!-- Eredmény -->
+<div id="bk-eredmeny" style="margin-top: 16px; display: flex; flex-direction: column; gap: 6px;">
+<!-- Munkavállalói levonások -->
+<div style="background: rgba(255,255,255,0.12); border-radius: 8px; padding: 12px;">
+<div style="color: rgba(255,255,255,0.7); font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">👤 Munkavállalói levonások</div>
+<div style="display: flex; justify-content: space-between; color: white; font-size: 0.9em; padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+<span>SZJA (15%)</span><span id="bk-szja"></span>
+</div>
+<div style="display: flex; justify-content: space-between; color: white; font-size: 0.9em; padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+<span>TB járulék (18,5%)</span><span id="bk-tb"></span>
+</div>
+<div style="display: flex; justify-content: space-between; color: white; font-size: 0.88em; padding: 3px 0; opacity: 0.7;">
+<span>Összes levonás</span><span id="bk-összes-levonás"></span>
+</div>
+</div>
+<!-- Nettó bér -->
+<div style="background: rgba(76, 175, 80, 0.3); border-radius: 8px; padding: 12px; text-align: center;">
+<div style="color: rgba(255,255,255,0.75); font-size: 0.78em; margin-bottom: 2px;">💵 NETTÓ BÉR</div>
+<div id="bk-netto" style="color: white; font-size: 1.6em; font-weight: bold;"></div>
+</div>
+<!-- Munkáltatói -->
+<div style="background: rgba(255,255,255,0.12); border-radius: 8px; padding: 12px;">
+<div style="color: rgba(255,255,255,0.7); font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">🏢 Munkáltatót terhelő</div>
+<div style="display: flex; justify-content: space-between; color: white; font-size: 0.9em; padding: 3px 0;">
+<span id="bk-munkáltatói-label"></span><span id="bk-munkáltatói"></span>
+</div>
+</div>
+<!-- NAV felé összesen -->
+<div style="background: rgba(255, 152, 0, 0.3); border-radius: 8px; padding: 12px; text-align: center;">
+<div style="color: rgba(255,255,255,0.75); font-size: 0.78em; margin-bottom: 2px;">🏛️ NAV FELÉ ÖSSZESEN</div>
+<div id="bk-nav" style="color: white; font-size: 1.35em; font-weight: bold;"></div>
+<div style="color: rgba(255,255,255,0.6); font-size: 0.75em; margin-top: 2px;">(SZJA + TB + munkáltatói)</div>
+</div>
+<!-- Összes költség a munkáltatónak -->
+<div style="background: rgba(255,255,255,0.1); border-radius: 8px; padding: 10px; text-align: center;">
+<div style="color: rgba(255,255,255,0.6); font-size: 0.78em;">📊 Összes munkáltatói költség (bruttó + munkáltatói adó)</div>
+<div id="bk-összes-ktg" style="color: white; font-size: 1.15em; font-weight: bold; margin-top: 2px;"></div>
+</div>
+</div>
+</div>
+<!-- BÉRKALKULATOR VÉGE -->
+<div class="data-item">
+<div class="data-label">Járulékfizetési alsó határ</div>
+<div class="data-value">2 905 200 Ft/év = 96 840 Ft/hó</div>
+</div>
+<div class="data-item">
+<div class="data-label">Járulékfizetési alsó határ (külföldi dolgozó)</div>
+<div class="data-value">715 765 Ft/hó</div>
+</div>
+<div class="data-item">
+<div class="data-label">Kisösszegű megbízási díj</div>
+<div class="data-value">Max 96 840 Ft/hó vagy 3 228 Ft/nap</div>
+</div>
+<div class="data-item">
+<div class="data-label">Rehabilitációs hozzájárulás</div>
+<div class="data-value">2 905 200 Ft/fő/év</div>
+</div>
+<div class="data-item">
+<div class="data-label">Egészségügyi szolgáltatási járulék</div>
+<div class="data-value">12 300 Ft/hó vagy 410 Ft/nap</div>
+</div>
+<div class="alert-box">
+<strong>📋 Nyugellátási alap</strong>
+</div>
+<div class="data-item">
+<div class="data-label">Járulékfizetés alsó határ minimálbér után</div>
+<div class="data-value">101 682 Ft/hó</div>
+<div class="data-note">ebből társ.bizt.járulék (18,5%): 59 718 Ft<br>
+ebből szocho (13%): 41 964 Ft</div>
+</div>
+<div class="data-item">
+<div class="data-label">Járulékfizetés alsó határ gar.bérminimum után</div>
+<div class="data-value">117 558 Ft/hó</div>
+<div class="data-note">ebből társ.bizt.járulék (18,5%): 69 042 Ft<br>
+ebből szocho (13%): 48 516 Ft</div>
+</div>
+</div>
+</div>
+<!-- SZÉP kártya -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">🎫</span> SZÉP Kártya</h2>
+<div class="category-content">
+<div class="data-item">
+<div class="data-label">SZÉP Kártya rekreációs keretösszeg</div>
+<div class="data-value">450 000 Ft/év (időarányosítani!)</div>
+<div class="data-note">Adó: 1,18 × (15% SZJA + 13% szocho) = 33,04%<br>
+vagy 1,18 × (15% SZJA) + 10% KIVA = 27,70%</div>
+</div>
+<div class="data-item">
+<div class="data-label">Aktív Magyarok alszámla keretösszeg</div>
+<div class="data-value">60 000 Ft/félév</div>
+</div>
+<div class="data-item">
+<div class="data-label">SZÉP - Aktív Magyarok keretösszeg felett</div>
+<div class="data-value">60 000 Ft/félévig időarányosítani</div>
+</div>
+<div class="data-item">
+<div class="data-label">Lakhatási támogatás (35 éves korig)</div>
+<div class="data-value">1 800 000 Ft/év (időarányosítani!)</div>
+</div>
+<div class="alert-box">
+<strong>⚠️ SZÉP Kártya rekreációs keret felett:</strong><br>
+Időarányosítani évi 450 000 Ft-tól<br><br>
+<strong>SZÉP - Aktív Magyarok keretösszeg felett:</strong><br>
+Időarányosítani 60 000 Ft/félévtől<br><br>
+<strong>Lakhatási támogatás 35 éves korig:</strong><br>
+Időarányosítani évi 1 800 000 Ft-tól
+</div>
+</div>
+</div>
+<!-- Munkaszüneti napok -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">📅</span> Munkaszüneti napok 2026</h2>
+<div class="category-content">
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Dátum</th>
+<th>Munkaszüneti nap</th>
+<th>Áthelyezett munkanap</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>01.01.</td>
+<td>Új év napja</td>
+<td>nincs (csütörtök)</td>
+</tr>
+<tr>
+<td>01.02.</td>
+<td>-</td>
+<td>Áthelyezett munkanap 01.02-hoz</td>
+</tr>
+<tr>
+<td>01.10.</td>
+<td>-</td>
+<td>Áthelyezett pihenőnap</td>
+</tr>
+<tr>
+<td>03.15.</td>
+<td>Nemzeti Ünnep</td>
+<td>nincs (vasárnap)</td>
+</tr>
+<tr>
+<td>04.03.</td>
+<td>Nagypéntek</td>
+<td>nincs (péntek)</td>
+</tr>
+<tr>
+<td>04.05.</td>
+<td>Húsvét vasárnap</td>
+<td>nincs (vasárnap)</td>
+</tr>
+<tr>
+<td>04.06.</td>
+<td>Húsvét hétfő</td>
+<td>nincs (hétfő)</td>
+</tr>
+<tr>
+<td>05.01.</td>
+<td>Munka ünnepe</td>
+<td>nincs (péntek)</td>
+</tr>
+<tr>
+<td>05.24.</td>
+<td>Pünkösd vasárnap</td>
+<td>nincs (vasárnap)</td>
+</tr>
+<tr>
+<td>05.25.</td>
+<td>Pünkösd hétfő</td>
+<td>nincs (hétfő)</td>
+</tr>
+<tr>
+<td>08.08.</td>
+<td>-</td>
+<td>Áthelyezett pihenőnap</td>
+</tr>
+<tr>
+<td>08.20.</td>
+<td>Államalapítás</td>
+<td>nincs (csütörtök)</td>
+</tr>
+<tr>
+<td>08.21.</td>
+<td>-</td>
+<td>Áthelyezett munkanap 08.21-hez</td>
+</tr>
+<tr>
+<td>10.23.</td>
+<td>1956-os forradalom</td>
+<td>nincs (péntek)</td>
+</tr>
+<tr>
+<td>11.01.</td>
+<td>Mindenszentek</td>
+<td>nincs (vasárnap)</td>
+</tr>
+<tr>
+<td>12.12.</td>
+<td>-</td>
+<td>Áthelyezett pihenőnap</td>
+</tr>
+<tr>
+<td>12.24.</td>
+<td>-</td>
+<td>Áthelyezett munkanap 12.24-hez</td>
+</tr>
+<tr>
+<td>12.25.</td>
+<td>Karácsony</td>
+<td>nincs (péntek)</td>
+</tr>
+<tr>
+<td>12.26.</td>
+<td>Karácsony</td>
+<td>nincs (szombat)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="alert-box">
+<strong>📊 Havi munkanapok száma (munkanap / óra):</strong>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Hónap</th>
+<th>Munkanap</th>
+<th>Óra</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>Január</td><td>21</td><td>168</td></tr>
+<tr><td>Február</td><td>20</td><td>160</td></tr>
+<tr><td>Március</td><td>22</td><td>176</td></tr>
+<tr><td>Április</td><td>20</td><td>160</td></tr>
+<tr><td>Május</td><td>19</td><td>152</td></tr>
+<tr><td>Június</td><td>22</td><td>176</td></tr>
+<tr><td>Július</td><td>23</td><td>184</td></tr>
+<tr><td>Augusztus</td><td>20</td><td>160</td></tr>
+<tr><td>Szeptember</td><td>22</td><td>176</td></tr>
+<tr><td>Október</td><td>21</td><td>168</td></tr>
+<tr><td>November</td><td>21</td><td>168</td></tr>
+<tr><td>December</td><td>22</td><td>176</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Ellátások -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">🏥</span> Ellátások & Juttatások</h2>
+<div class="category-content">
+<div class="data-item">
+<div class="data-label">Táppénz</div>
+<div class="data-value">Napi alap 60% vagy 50%</div>
+<div class="data-note">Max: 21 520 Ft/nap (minimálbér 2×-ének 30-ad része)<br>
+50% feltétele:<br>
+• 730 napnál kevesebb folyamatos biztosítási idő<br>
+• nem kórházi ellátás</div>
+</div>
+<div class="data-item">
+<div class="data-label">CSED (Csecsemőgondozási díj)</div>
+<div class="data-value">Napi jövedelem 100%</div>
+<div class="data-note">Nincs maximuma</div>
+</div>
+<div class="data-item">
+<div class="data-label">GYED (Gyermekgondozási díj)</div>
+<div class="data-value">Napi alap 70%</div>
+<div class="data-note">Max: 451 920 Ft/hó (minimálbér 2× 70%-a)</div>
+</div>
+<div class="data-item">
+<div class="data-label">Nagyszülői GYED</div>
+<div class="data-value">Nevelőszülői GYED alapja</div>
+<div class="data-note">Az 1 napra jutó minimálbér 55%-ának (5 918 Ft/nap) a 70%-a = max napi 4 142,60 Ft</div>
+</div>
+<div class="data-item">
+<div class="data-label">Diplomás GYED (alapképzés)</div>
+<div class="data-value">225 960 Ft/hó</div>
+<div class="data-note">Jogosultság kezdetén fennálló minimálbér 70%-a</div>
+</div>
+<div class="data-item">
+<div class="data-label">Diplomás GYED (mesterképzés)</div>
+<div class="data-value">261 240 Ft/hó</div>
+<div class="data-note">Jogosultság kezdetén fennálló garantált bérminimum 70%-a</div>
+</div>
+<div class="data-item">
+<div class="data-label">Örökbefogadói díj</div>
+<div class="data-value">Napi alap 70%</div>
+<div class="data-note">Max: 451 920 Ft/hó (minimálbér 2× 70%-a)</div>
+</div>
+<div class="data-item">
+<div class="data-label">GYES (Gyermekgondozási segély)</div>
+<div class="data-value">28 500 Ft/hó</div>
+<div class="data-note">-10% nyugdíjjárulék, gyermek 3 éves koráig</div>
+</div>
+<div class="data-item">
+<div class="data-label">GYET (Gyermeknevelési támogatás)</div>
+<div class="data-value">28 500 Ft/hó</div>
+<div class="data-note">Ikergyermekek esetén a tankötelessé válás évének végéig<br>
+Tartósan beteg vagy fogyatékos gyermek után 10 éves koráig</div>
+</div>
+<div class="data-item">
+<div class="data-label">GYOD (Gyermekek otthongondozási díja)</div>
+<div class="data-value">28 500 Ft/hó</div>
+<div class="data-note">Ha össz. 3 vagy több kiskorút nevel, a legfiatalabb 8 éves koráig</div>
+</div>
+<div class="data-item">
+<div class="data-label">Öregségi nyugdíj legkisebb összege</div>
+<div class="data-value">28 500 Ft/hó</div>
+</div>
+<div class="data-item">
+<div class="data-label">Anyasági támogatás</div>
+<div class="data-value">64 125 Ft</div>
+<div class="data-note">Ikreknél: 85 500 Ft</div>
+</div>
+<div class="data-item">
+<div class="data-label">Ápolási díj (100%)</div>
+<div class="data-value">51 760 Ft/hó</div>
+</div>
+<div class="data-item">
+<div class="data-label">Kiemelt ápolási díj (180%)</div>
+<div class="data-value">93 168 Ft/hó</div>
+</div>
+<div class="data-item">
+<div class="data-label">Emelt összegű ápolási díj (150%)</div>
+<div class="data-value">77 640 Ft/hó</div>
+</div>
+<div class="data-item">
+<div class="data-label">Álláskeresési járadék</div>
+<div class="data-value">Társ.bizt.jár.alap 60%, max 28 500 Ft</div>
+<div class="data-note">Ha 3 vagy több kiskorút nevel: minimálbér 100% = 10 760 Ft/nap (a legfiatalabb 8 éves koráig)</div>
+</div>
+<div class="data-item">
+<div class="data-label">Nyugdíj előtti álláskeresési segély</div>
+<div class="data-value">Társ.bizt.jár.alap 40%</div>
+<div class="data-note">Max: minimálbér 40% = 4 304 Ft/nap</div>
+</div>
+<div class="data-item">
+<div class="data-label">Álláskeresést ösztönző juttatás</div>
+<div class="data-value">Legalább a min.bér 70%</div>
+<div class="data-note">Min: 225 960 Ft/hó</div>
+</div>
+</div>
+</div>
+<!-- Adómentes juttatások -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">🎁</span> Adómentes juttatások</h2>
+<div class="category-content">
+<div class="data-item">
+<div class="data-label">Sportrendezvényre szóló belépő</div>
+<div class="data-value">322 800 Ft/év</div>
+</div>
+<div class="data-item">
+<div class="data-label">Kulturális szolgáltatás belépő/bérlet</div>
+<div class="data-value">322 800 Ft/év</div>
+</div>
+<div class="data-item">
+<div class="data-label">Állatkertbe szóló belépő/bérlet</div>
+<div class="data-value">322 800 Ft/év</div>
+</div>
+<div class="data-item">
+<div class="data-label">Távmunka költségtérítése</div>
+<div class="data-value">Max 32 280 Ft/hó</div>
+</div>
+<div class="data-item">
+<div class="data-label">Óvoda, bölcsődei díj térítése</div>
+<div class="data-value">Teljes összege</div>
+</div>
+<div class="data-item">
+<div class="data-label">Járványügyi szűrővizsgálat</div>
+<div class="data-value">Teljes összege</div>
+</div>
+<div class="data-item">
+<div class="data-label">Járványügyi védőoltás</div>
+<div class="data-value">Teljes összege</div>
+</div>
+<div class="data-item">
+<div class="data-label">Kerékpár használat</div>
+<div class="data-value">Teljes összege</div>
+</div>
+<div class="data-item">
+<div class="data-label">Közösségi autómegosztás</div>
+<div class="data-value">Teljes összege</div>
+</div>
+<div class="data-item">
+<div class="data-label">Diákhitel törlesztése</div>
+<div class="data-value">Teljes összege</div>
+</div>
+<div class="data-item">
+<div class="data-label">Borászati termék juttatása</div>
+<div class="data-value">Teljes összege</div>
+</div>
+<div class="data-item">
+<div class="data-label">Csekély értékű ajándék</div>
+<div class="data-value">3 × 32 280 Ft/év = 96 840 Ft/év</div>
+<div class="data-note">Évente 3 alkalommal, max. a minimálbér 10%-áig</div>
+</div>
+<div class="alert-box">
+<strong>📋 Béren kívüli juttatás:</strong> Adó: 15% SZJA + 13% szocho vagy 10% KIVA<br>
+<strong>Néhány egyes meghatározott juttatás:</strong> Adó: 33,4% vagy KIVA-s 27,7%
+</div>
+</div>
+</div>
+<!-- Cégautóadó -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">🚗</span> Cégautóadó</h2>
+<div class="category-content">
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Teljesítmény (kW)</th>
+<th>"0"-"4" környezetvédelmi</th>
+<th>"5", "14-15" környezetvédelmi</th>
+<th>"6"-"10" környezetvédelmi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0-50</td>
+<td>38 500 Ft</td>
+<td>20 000 Ft</td>
+<td>17 500 Ft</td>
+</tr>
+<tr>
+<td>51-90</td>
+<td>51 000 Ft</td>
+<td>25 000 Ft</td>
+<td>20 000 Ft</td>
+</tr>
+<tr>
+<td>91-120</td>
+<td>76 000 Ft</td>
+<td>51 000 Ft</td>
+<td>25 000 Ft</td>
+</tr>
+<tr>
+<td>120 felett</td>
+<td>101 000 Ft</td>
+<td>76 000 Ft</td>
+<td>51 000 Ft</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Szabadság és felmondási idő -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">🏖️</span> Szabadság & Felmondási idő</h2>
+<div class="category-content">
+<div class="alert-box">
+<strong>📅 Szabadság életkor szerint</strong>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Munkaviszony időtartama</th>
+<th>Mennyivel hosszabbodik</th>
+<th>Tényleges szabadság</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>0-2,99 év</td><td>0 nap</td><td>20 munkanap (alapszabadság)</td></tr>
+<tr><td>3-4,99 év</td><td>+ 5 nap</td><td>25 munkanap</td></tr>
+<tr><td>5-7,99 év</td><td>+ 15 nap</td><td>35 munkanap</td></tr>
+<tr><td>8-9,99 év</td><td>+ 20 nap</td><td>40 munkanap</td></tr>
+<tr><td>10-14,99 év</td><td>+ 25 nap</td><td>45 munkanap</td></tr>
+<tr><td>15-17,99 év</td><td>+ 30 nap</td><td>50 munkanap</td></tr>
+<tr><td>18-19,99 év</td><td>+ 40 nap</td><td>60 munkanap</td></tr>
+<tr><td>20 év vagy több</td><td>+ 60 nap</td><td>80 munkanap</td></tr>
+</tbody>
+</table>
+</div>
+<div class="alert-box">
+<strong>⏱️ Felmondási idő a munkaviszony időtartama szerint</strong>
+</div>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Munkaviszony időtartama</th>
+<th>Mennyivel hosszabbodik</th>
+<th>Tényleges felmondási idő</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>0-2,99 év</td><td>0 nap</td><td>30 nap</td></tr>
+<tr><td>3-4,99 év</td><td>+ 5 nap</td><td>35 nap</td></tr>
+<tr><td>5-7,99 év</td><td>+ 15 nap</td><td>45 nap</td></tr>
+<tr><td>8-9,99 év</td><td>+ 20 nap</td><td>50 nap</td></tr>
+<tr><td>10-14,99 év</td><td>+ 25 nap</td><td>55 nap</td></tr>
+<tr><td>15-17,99 év</td><td>+ 30 nap</td><td>60 nap</td></tr>
+<tr><td>18-19,99 év</td><td>+ 40 nap</td><td>70 nap</td></tr>
+<tr><td>20 év vagy több</td><td>+ 60 nap</td><td>90 nap</td></tr>
+</tbody>
+</table>
+</div>
+<div class="alert-box">
+<strong>⚠️ Maximum 6 havi lehet a felmondási idő</strong>
+</div>
+<div class="alert-box">
+<strong>🎁 Egyéb pótszabadság</strong>
+</div>
+<div class="data-item">
+<div class="data-label">Megváltozott munkaképességű</div>
+<div class="data-value">+ 5 munkanap</div>
+</div>
+<div class="data-item">
+<div class="data-label">Földalatti munkavégzés</div>
+<div class="data-value">+ 5 munkanap</div>
+</div>
+<div class="data-item">
+<div class="data-label">Apaszabadság (100% bér)</div>
+<div class="data-value">5 munkanap</div>
+</div>
+<div class="data-item">
+<div class="data-label">Apaszabadság (40% bér)</div>
+<div class="data-value">5 munkanap</div>
+</div>
+<div class="data-item">
+<div class="data-label">Fogyatékos gyerek</div>
+<div class="data-value">+ 2 munkanap</div>
+</div>
+<div class="data-item">
+<div class="data-label">Szülői szabadság</div>
+<div class="data-value">Max 44 nap</div>
+</div>
+</div>
+</div>
+<!-- Végkielégítés -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">💼</span> Végkielégítés</h2>
+<div class="category-content">
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>Munkaviszony időtartama</th>
+<th>Végkielégítés összege</th>
+</tr>
+</thead>
+<tbody>
+<tr><td>3-4 év</td><td>1 havi</td></tr>
+<tr><td>5-9 év</td><td>2 havi</td></tr>
+<tr><td>10-14 év</td><td>3 havi</td></tr>
+<tr><td>15-19 év</td><td>4 havi</td></tr>
+<tr><td>20-24 év</td><td>5 havi</td></tr>
+<tr><td>25 év felett</td><td>6 havi</td></tr>
+</tbody>
+</table>
+</div>
+<div class="data-item">
+<div class="data-label">Nyugdíj előtt max 5 év + 1 hó</div>
+<div class="data-value">Összesen legfeljebb 6 havi</div>
+</div>
+<div class="data-item">
+<div class="data-label">Nyugdíj előtt max 5 év + 2 hó</div>
+<div class="data-value">60% lesz a mértéke</div>
+</div>
+<div class="data-item">
+<div class="data-label">Nyugdíj előtt max 5 év + 3 hó</div>
+<div class="data-value">Speciális szabály</div>
+</div>
+</div>
+</div>
+<!-- Jövedelemletiltás -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">⚖️</span> Jövedelemletiltás</h2>
+<div class="category-content">
+<div class="alert-box">
+<strong>📅 Változás: 2025.07.01-től</strong>
+</div>
+<div class="data-item">
+<div class="data-label">Mentes a végrehajtás alól</div>
+<div class="data-value">Min.bér nettó összegének 60%-a = 128 797 Ft + családi kedvezmény nettó összege*</div>
+<div class="data-note">* Csak a 2025.07.01 után indult végrehajtás esetén mentes a családi kedvezmény!</div>
+</div>
+<div class="data-item">
+<div class="data-label">Korlátozás nélkül végrehajtás alá vonható</div>
+<div class="data-value">Nettó 200 000 Ft/hó feletti rész</div>
+</div>
+</div>
+</div>
+<!-- Képzőhely juttatások -->
+<div class="category-card" onclick="toggleCategory(this)">
+<h2><span class="category-icon">🎓</span> Képzőhely juttatások</h2>
+<div class="category-content">
+<div class="data-item">
+<div class="data-label">Szakképzési munkaszerződés alapján kifizethető adómentes összeg</div>
+<div class="data-value">100 000 - 168 000 Ft</div>
+</div>
+<div class="data-item">
+<div class="data-label">Hallgatói munkaszerződés szerinti minimális havi díjazás</div>
+<div class="data-value">209 820 Ft/hó</div>
+<div class="data-note">Havi összege: 322 800 Ft<br>
+Több gyermek esetén havi összeg 1,5×-e</div>
+</div>
+<div class="data-item">
+<div class="data-label">Szakirányú oktatás önköltsége</div>
+<div class="data-value">Duális képzés alapnormatíva</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<script>
+function toggleCategory(card) {
+const isActive = card.classList.contains('active');
+// Close all other cards
+document.querySelectorAll('.category-card').forEach(c => {
+c.classList.remove('active');
+});
+// Toggle current card
+if (!isActive) {
+card.classList.add('active');
+}
+}
+// --- BÉRKALKULATOR ---
+let bkTárs = 'tao';
+function bérkalkSetTárs(típus) {
+bkTárs = típus;
+document.getElementById('bk-btn-tao').style.background = (típus === 'tao') ? 'white' : 'transparent';
+document.getElementById('bk-btn-tao').style.color = (típus === 'tao') ? '#A0714F' : 'white';
+document.getElementById('bk-btn-tao').style.borderColor = (típus === 'tao') ? 'white' : 'rgba(255,255,255,0.4)';
+document.getElementById('bk-btn-kiva').style.background = (típus === 'kiva') ? 'white' : 'transparent';
+document.getElementById('bk-btn-kiva').style.color = (típus === 'kiva') ? '#A0714F' : 'white';
+document.getElementById('bk-btn-kiva').style.borderColor = (típus === 'kiva') ? 'white' : 'rgba(255,255,255,0.4)';
+bérkalkSzámol();
+}
+function bérkalkResetBruttó() {
+const ora = parseFloat(document.getElementById('bk-ora').value) || 40;
+const arányosMin = Math.round(322800 * (ora / 40));
+document.getElementById('bk-arányos-minbér').textContent = arányosMin.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('bk-brutto').value = arányosMin;
+bérkalkSzámol();
+}
+function bérkalkSzámol() {
+const brutto = parseFloat(document.getElementById('bk-brutto').value) || 0;
+const ora = parseFloat(document.getElementById('bk-ora').value) || 40;
+const arányosMin = Math.round(322800 * (ora / 40));
+document.getElementById('bk-arányos-minbér').textContent = arányosMin.toLocaleString('hu-HU') + ' Ft';
+const szja = Math.round(brutto * 0.15);
+const tb = Math.round(brutto * 0.185);
+const összes_levonás = szja + tb;
+const netto = brutto - összes_levonás;
+const munkáltatói_pct = (bkTárs === 'tao') ? 0.13 : 0.10;
+const munkáltatói = Math.round(brutto * munkáltatói_pct);
+const nav = szja + tb + munkáltatói;
+const összes_ktg = brutto + munkáltatói;
+document.getElementById('bk-szja').textContent = szja.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('bk-tb').textContent = tb.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('bk-összes-levonás').textContent = összes_levonás.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('bk-netto').textContent = netto.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('bk-munkáltatói-label').textContent = (bkTárs === 'tao') ? 'Szocho (13%)' : 'KIVA (10%)';
+document.getElementById('bk-munkáltatói').textContent = munkáltatói.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('bk-nav').textContent = nav.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('bk-összes-ktg').textContent = összes_ktg.toLocaleString('hu-HU') + ' Ft';
+}
+document.addEventListener('DOMContentLoaded', function() {
+bérkalkResetBruttó();
+});
+// --- BÉRKALKULATOR VÉGE ---
+function számolÁFA() {
+const input = document.getElementById('afa-indulas-dátum');
+const eredmenyDiv = document.getElementById('afa-eredmeny');
+const napokText = document.getElementById('afa-napok-text');
+const keretValue = document.getElementById('afa-keret-value');
+const képletText = document.getElementById('afa-képlet-text');
+if (!input.value) {
+eredmenyDiv.style.display = 'none';
+return;
+}
+const indulas = new Date(input.value);
+const évVége = new Date('2026-12-31');
+const évEleje = new Date('2026-01-01');
+if (indulas < évEleje || indulas > évVége) {
+eredmenyDiv.style.display = 'none';
+return;
+}
+const msPerNap = 24 * 60 * 60 * 1000;
+const aktivNapok = Math.round((évVége - indulas) / msPerNap) + 1;
+const arányosKeret = Math.round((20000000 / 365) * aktivNapok);
+const hónapok = ['január','február','március','április','május','június','július','augusztus','szeptember','október','november','december'];
+const indulásStr = indulas.getFullYear() + '. ' + hónapok[indulas.getMonth()] + ' ' + indulas.getDate() + '.';
+eredmenyDiv.style.display = 'block';
+if (aktivNapok === 365) {
+napokText.innerHTML = 'Január 1-től indul → teljes év';
+keretValue.textContent = '20 000 000 Ft';
+képletText.textContent = 'Teljes évi keret, arányosítás nem szükséges.';
+} else {
+napokText.innerHTML = 'Indulás: ' + indulásStr + ' → Aktív napok: <strong>' + aktivNapok + ' nap</strong>';
+keretValue.textContent = arányosKeret.toLocaleString('hu-HU') + ' Ft';
+képletText.textContent = '20 000 000 / 365 × ' + aktivNapok + ' = ' + arányosKeret.toLocaleString('hu-HU') + ' Ft';
+}
+}
+function toggleSubSection(id) {
+const section = document.getElementById(id);
+if (section.style.display === 'none') {
+section.style.display = 'block';
+} else {
+section.style.display = 'none';
+}
+}
+// Search functionality
+const searchInput = document.getElementById('searchInput');
+searchInput.addEventListener('input', function(e) {
+const searchTerm = e.target.value.toLowerCase();
+document.querySelectorAll('.category-card').forEach(card => {
+const text = card.textContent.toLowerCase();
+if (text.includes(searchTerm)) {
+card.style.display = 'block';
+if (searchTerm.length > 2) {
+card.classList.add('active');
+}
+} else {
+card.style.display = 'none';
+}
+});
+// If search is empty, show all cards
+if (searchTerm === '') {
+document.querySelectorAll('.category-card').forEach(card => {
+card.style.display = 'block';
+card.classList.remove('active');
+});
+}
+});
+</script>
+</body>
+</html>
