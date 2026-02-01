@@ -1160,7 +1160,6 @@ d) Tanulmányi és tehetséggondozó verseny szervezése
 <div class="data-value">Mentes, ha a terméket korábban kizárólag adómentes tevékenységhez használták, és ahhoz adólevonási jog nem kapcsolódott.</div>
 </div>
 </div>
-</div>
 <!-- Arányosítási kalkulátor -->
 <div style="background: linear-gradient(135deg, #A0714F 0%, #7A4F2E 100%); padding: 18px; border-radius: 10px; margin: 10px 0;">
 <div style="color: white; font-weight: bold; font-size: 1.05em; margin-bottom: 12px;">🧮 Alanyi mentes keret arányosítási kalkulátor</div>
@@ -2008,6 +2007,7 @@ Több gyermek esetén havi összeg 1,5×-e</div>
 </div>
 </div>
 </div>
+</div>
 <script>
 function toggleCategory(card) {
 const isActive = card.classList.contains('active');
@@ -2020,6 +2020,12 @@ if (!isActive) {
 card.classList.add('active');
 }
 }
+// Megakadályozzuk a tartalom kattintásának bubble-álását a card-ra
+document.querySelectorAll('.category-content').forEach(content => {
+content.addEventListener('click', function(e) {
+e.stopPropagation();
+});
+});
 // --- BÉRKALKULATOR ---
 let bkTárs = 'tao';
 function bérkalkSetTárs(típus) {
