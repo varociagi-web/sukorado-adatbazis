@@ -584,9 +584,20 @@ font-weight: bold;
 <!-- BÉRKALKULATOR -->
 <div style="background: linear-gradient(135deg, #A0714F 0%, #7A4F2E 100%); padding: 18px; border-radius: 10px; margin: 10px 0;">
 <div style="color: white; font-weight: bold; font-size: 1.05em; margin-bottom: 4px;">🧮 Bérkalkulator</div>
-<div style="color: rgba(255,255,255,0.8); font-size: 0.82em; margin-bottom: 14px;">Bruttó bér alapján kiszámítja a levont járulékokat és a munkáltatókat terhelő adót</div>
+<div style="color: rgba(255,255,255,0.8); font-size: 0.82em; margin-bottom: 14px;">Számolj bruttó vagy nettó bér alapján</div>
 <!-- Inputs -->
 <div style="display: flex; flex-direction: column; gap: 10px;">
+<!-- Számítási mód toggle -->
+<div style="display: flex; gap: 8px; margin-bottom: 8px;">
+<button id="bk-mode-brutto" onclick="bérkalkSetMode('brutto')"
+style="flex: 1; padding: 7px; border: 2px solid white; border-radius: 6px; background: white; color: #A0714F; font-weight: bold; font-size: 0.88em; cursor: pointer;">
+Bruttó → Nettó
+</button>
+<button id="bk-mode-netto" onclick="bérkalkSetMode('netto')"
+style="flex: 1; padding: 7px; border: 2px solid rgba(255,255,255,0.4); border-radius: 6px; background: transparent; color: white; font-weight: bold; font-size: 0.88em; cursor: pointer;">
+Nettó → Bruttó
+</button>
+</div>
 <!-- Óraszám és minimálbér sor -->
 <div style="display: flex; gap: 10px; flex-wrap: wrap; align-items: flex-end;">
 <div style="flex: 1; min-width: 130px;">
@@ -600,12 +611,19 @@ oninput="bérkalkResetBruttó()">
 <div id="bk-arányos-minbér" style="background: rgba(255,255,255,0.15); color: white; padding: 8px 10px; border-radius: 6px; font-size: 0.95em; margin-top: 3px; font-weight: bold;"></div>
 </div>
 </div>
-<!-- Bruttó bér -->
-<div>
-<label style="color: rgba(255,255,255,0.85); font-size: 0.8em;">Bruttó bér (Ft/hó) – felírható kéziesen is</label>
+<!-- Bruttó bér input -->
+<div id="bk-brutto-group">
+<label style="color: rgba(255,255,255,0.85); font-size: 0.8em;">Bruttó bér (Ft/hó)</label>
 <input type="number" id="bk-brutto" value="322800" min="0" step="100"
 style="width: 100%; padding: 8px 10px; border: none; border-radius: 6px; font-size: 1.1em; margin-top: 3px; font-weight: bold;"
 oninput="bérkalkSzámol()">
+</div>
+<!-- Nettó bér input -->
+<div id="bk-netto-group" style="display: none;">
+<label style="color: rgba(255,255,255,0.85); font-size: 0.8em;">Nettó bér (Ft/hó)</label>
+<input type="number" id="bk-netto-input" value="214767" min="0" step="100"
+style="width: 100%; padding: 8px 10px; border: none; border-radius: 6px; font-size: 1.1em; margin-top: 3px; font-weight: bold;"
+oninput="bérkalkSzámolFromNettó()">
 </div>
 <!-- TAO / KIVA toggle -->
 <div style="display: flex; gap: 8px; margin-top: 2px;">
@@ -621,6 +639,11 @@ KIVA cég → 10% KIVA
 </div>
 <!-- Eredmény -->
 <div id="bk-eredmeny" style="margin-top: 16px; display: flex; flex-direction: column; gap: 6px;">
+<!-- Bruttó bér (nettó módban látható) -->
+<div id="bk-brutto-display" style="background: rgba(33, 150, 243, 0.3); border-radius: 8px; padding: 12px; text-align: center; display: none;">
+<div style="color: rgba(255,255,255,0.75); font-size: 0.78em; margin-bottom: 2px;">💼 BRUTTÓ BÉR</div>
+<div id="bk-brutto-value" style="color: white; font-size: 1.6em; font-weight: bold;"></div>
+</div>
 <!-- Munkavállalói levonások -->
 <div style="background: rgba(255,255,255,0.12); border-radius: 8px; padding: 12px;">
 <div style="color: rgba(255,255,255,0.7); font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">👤 Munkavállalói levonások</div>
@@ -660,6 +683,77 @@ KIVA cég → 10% KIVA
 </div>
 </div>
 <!-- BÉRKALKULATOR VÉGE -->
+<!-- OSZTALÉK KALKULATOR -->
+<div style="background: linear-gradient(135deg, #6B46C1 0%, #4A2E8A 100%); padding: 18px; border-radius: 10px; margin: 15px 0;">
+<div style="color: white; font-weight: bold; font-size: 1.05em; margin-bottom: 4px;">💰 Osztalék kalkulator</div>
+<div style="color: rgba(255,255,255,0.8); font-size: 0.82em; margin-bottom: 14px;">Számolj bruttó vagy nettó osztalék alapján</div>
+<!-- Inputs -->
+<div style="display: flex; flex-direction: column; gap: 10px;">
+<!-- Számítási mód toggle -->
+<div style="display: flex; gap: 8px; margin-bottom: 8px;">
+<button id="osztak-mode-brutto" onclick="osztakSetMode('brutto')"
+style="flex: 1; padding: 7px; border: 2px solid white; border-radius: 6px; background: white; color: #6B46C1; font-weight: bold; font-size: 0.88em; cursor: pointer;">
+Bruttó → Nettó
+</button>
+<button id="osztak-mode-netto" onclick="osztakSetMode('netto')"
+style="flex: 1; padding: 7px; border: 2px solid rgba(255,255,255,0.4); border-radius: 6px; background: transparent; color: white; font-weight: bold; font-size: 0.88em; cursor: pointer;">
+Nettó → Bruttó
+</button>
+</div>
+<!-- Bruttó osztalék input -->
+<div id="osztak-brutto-group">
+<label style="color: rgba(255,255,255,0.85); font-size: 0.8em;">Bruttó osztalék (Ft)</label>
+<input type="number" id="osztak-brutto" value="1000000" min="0" step="1000"
+style="width: 100%; padding: 8px 10px; border: none; border-radius: 6px; font-size: 1.1em; margin-top: 3px; font-weight: bold;"
+oninput="osztakSzámol()">
+</div>
+<!-- Nettó osztalék input -->
+<div id="osztak-netto-group" style="display: none;">
+<label style="color: rgba(255,255,255,0.85); font-size: 0.8em;">Nettó osztalék (Ft)</label>
+<input type="number" id="osztak-netto-input" value="720000" min="0" step="1000"
+style="width: 100%; padding: 8px 10px; border: none; border-radius: 6px; font-size: 1.1em; margin-top: 3px; font-weight: bold;"
+oninput="osztakSzámolFromNettó()">
+</div>
+<!-- Szocho van/nincs toggle -->
+<div style="display: flex; gap: 8px; margin-top: 2px;">
+<button id="osztak-btn-szochoval" onclick="osztakSetSzocho(true)"
+style="flex: 1; padding: 7px; border: 2px solid white; border-radius: 6px; background: white; color: #6B46C1; font-weight: bold; font-size: 0.88em; cursor: pointer;">
+Szocho van (13%)
+</button>
+<button id="osztak-btn-szochonelkül" onclick="osztakSetSzocho(false)"
+style="flex: 1; padding: 7px; border: 2px solid rgba(255,255,255,0.4); border-radius: 6px; background: transparent; color: white; font-weight: bold; font-size: 0.88em; cursor: pointer;">
+Csak SZJA (15%)
+</button>
+</div>
+</div>
+<!-- Eredmény -->
+<div id="osztak-eredmeny" style="margin-top: 16px; display: flex; flex-direction: column; gap: 6px;">
+<!-- Bruttó osztalék (nettó módban látható) -->
+<div id="osztak-brutto-display" style="background: rgba(33, 150, 243, 0.3); border-radius: 8px; padding: 12px; text-align: center; display: none;">
+<div style="color: rgba(255,255,255,0.75); font-size: 0.78em; margin-bottom: 2px;">💼 BRUTTÓ OSZTALÉK</div>
+<div id="osztak-brutto-value" style="color: white; font-size: 1.6em; font-weight: bold;"></div>
+</div>
+<!-- Levonások -->
+<div style="background: rgba(255,255,255,0.12); border-radius: 8px; padding: 12px;">
+<div style="color: rgba(255,255,255,0.7); font-size: 0.78em; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px;">📋 Levonások</div>
+<div style="display: flex; justify-content: space-between; color: white; font-size: 0.9em; padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+<span>SZJA (15%)</span><span id="osztak-szja"></span>
+</div>
+<div id="osztak-szocho-row" style="display: flex; justify-content: space-between; color: white; font-size: 0.9em; padding: 3px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+<span>Szocho (13%)</span><span id="osztak-szocho"></span>
+</div>
+<div style="display: flex; justify-content: space-between; color: white; font-size: 0.88em; padding: 3px 0; opacity: 0.7;">
+<span>Összes levonás</span><span id="osztak-összes-levonás"></span>
+</div>
+</div>
+<!-- Nettó osztalék -->
+<div style="background: rgba(76, 175, 80, 0.3); border-radius: 8px; padding: 12px; text-align: center;">
+<div style="color: rgba(255,255,255,0.75); font-size: 0.78em; margin-bottom: 2px;">💵 NETTÓ OSZTALÉK</div>
+<div id="osztak-netto" style="color: white; font-size: 1.6em; font-weight: bold;"></div>
+</div>
+</div>
+</div>
+<!-- OSZTALÉK KALKULATOR VÉGE -->
 <div class="data-item">
 <div class="data-label">Járulékfizetési alsó határ</div>
 <div class="data-value">2 905 200 Ft/év = 96 840 Ft/hó</div>
@@ -2559,6 +2653,20 @@ e.stopPropagation();
 });
 // --- BÉRKALKULATOR ---
 let bkTárs = 'tao';
+let bkMode = 'brutto'; // 'brutto' vagy 'netto'
+function bérkalkSetMode(mode) {
+bkMode = mode;
+document.getElementById('bk-mode-brutto').style.background = (mode === 'brutto') ? 'white' : 'transparent';
+document.getElementById('bk-mode-brutto').style.color = (mode === 'brutto') ? '#A0714F' : 'white';
+document.getElementById('bk-mode-brutto').style.borderColor = (mode === 'brutto') ? 'white' : 'rgba(255,255,255,0.4)';
+document.getElementById('bk-mode-netto').style.background = (mode === 'netto') ? 'white' : 'transparent';
+document.getElementById('bk-mode-netto').style.color = (mode === 'netto') ? '#A0714F' : 'white';
+document.getElementById('bk-mode-netto').style.borderColor = (mode === 'netto') ? 'white' : 'rgba(255,255,255,0.4)';
+document.getElementById('bk-brutto-group').style.display = (mode === 'brutto') ? 'block' : 'none';
+document.getElementById('bk-netto-group').style.display = (mode === 'netto') ? 'block' : 'none';
+document.getElementById('bk-brutto-display').style.display = (mode === 'netto') ? 'block' : 'none';
+if (mode === 'brutto') bérkalkSzámol(); else bérkalkSzámolFromNettó();
+}
 function bérkalkSetTárs(típus) {
 bkTárs = típus;
 document.getElementById('bk-btn-tao').style.background = (típus === 'tao') ? 'white' : 'transparent';
@@ -2567,7 +2675,7 @@ document.getElementById('bk-btn-tao').style.borderColor = (típus === 'tao') ? '
 document.getElementById('bk-btn-kiva').style.background = (típus === 'kiva') ? 'white' : 'transparent';
 document.getElementById('bk-btn-kiva').style.color = (típus === 'kiva') ? '#A0714F' : 'white';
 document.getElementById('bk-btn-kiva').style.borderColor = (típus === 'kiva') ? 'white' : 'rgba(255,255,255,0.4)';
-bérkalkSzámol();
+if (bkMode === 'brutto') bérkalkSzámol(); else bérkalkSzámolFromNettó();
 }
 function bérkalkResetBruttó() {
 const ora = parseFloat(document.getElementById('bk-ora').value) || 40;
@@ -2598,10 +2706,100 @@ document.getElementById('bk-munkáltatói').textContent = munkáltatói.toLocale
 document.getElementById('bk-nav').textContent = nav.toLocaleString('hu-HU') + ' Ft';
 document.getElementById('bk-összes-ktg').textContent = összes_ktg.toLocaleString('hu-HU') + ' Ft';
 }
+function bérkalkSzámolFromNettó() {
+const netto = parseFloat(document.getElementById('bk-netto-input').value) || 0;
+// Nettó = Bruttó - (Bruttó × 0.15) - (Bruttó × 0.185)
+// Nettó = Bruttó × (1 - 0.15 - 0.185) = Bruttó × 0.665
+// Bruttó = Nettó / 0.665
+const brutto = Math.round(netto / 0.665);
+// Most számoljuk ki az eredményt
+const ora = parseFloat(document.getElementById('bk-ora').value) || 40;
+const arányosMin = Math.round(322800 * (ora / 40));
+document.getElementById('bk-arányos-minbér').textContent = arányosMin.toLocaleString('hu-HU') + ' Ft';
+const szja = Math.round(brutto * 0.15);
+const tb = Math.round(brutto * 0.185);
+const összes_levonás = szja + tb;
+const netto_calc = brutto - összes_levonás;
+const munkáltatói_pct = (bkTárs === 'tao') ? 0.13 : 0.10;
+const munkáltatói = Math.round(brutto * munkáltatói_pct);
+const nav = szja + tb + munkáltatói;
+const összes_ktg = brutto + munkáltatói;
+// Bruttót is mutassuk
+document.getElementById('bk-brutto').value = brutto;
+document.getElementById('bk-brutto-value').textContent = brutto.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('bk-szja').textContent = szja.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('bk-tb').textContent = tb.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('bk-összes-levonás').textContent = összes_levonás.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('bk-netto').textContent = netto_calc.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('bk-munkáltatói-label').textContent = (bkTárs === 'tao') ? 'Szocho (13%)' : 'KIVA (10%)';
+document.getElementById('bk-munkáltatói').textContent = munkáltatói.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('bk-nav').textContent = nav.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('bk-összes-ktg').textContent = összes_ktg.toLocaleString('hu-HU') + ' Ft';
+}
 document.addEventListener('DOMContentLoaded', function() {
 bérkalkResetBruttó();
 });
 // --- BÉRKALKULATOR VÉGE ---
+// --- OSZTALÉK KALKULATOR ---
+let osztakSzocho = true; // true = szocho van, false = csak SZJA
+let osztakMode = 'brutto'; // 'brutto' vagy 'netto'
+function osztakSetMode(mode) {
+osztakMode = mode;
+document.getElementById('osztak-mode-brutto').style.background = (mode === 'brutto') ? 'white' : 'transparent';
+document.getElementById('osztak-mode-brutto').style.color = (mode === 'brutto') ? '#6B46C1' : 'white';
+document.getElementById('osztak-mode-brutto').style.borderColor = (mode === 'brutto') ? 'white' : 'rgba(255,255,255,0.4)';
+document.getElementById('osztak-mode-netto').style.background = (mode === 'netto') ? 'white' : 'transparent';
+document.getElementById('osztak-mode-netto').style.color = (mode === 'netto') ? '#6B46C1' : 'white';
+document.getElementById('osztak-mode-netto').style.borderColor = (mode === 'netto') ? 'white' : 'rgba(255,255,255,0.4)';
+document.getElementById('osztak-brutto-group').style.display = (mode === 'brutto') ? 'block' : 'none';
+document.getElementById('osztak-netto-group').style.display = (mode === 'netto') ? 'block' : 'none';
+document.getElementById('osztak-brutto-display').style.display = (mode === 'netto') ? 'block' : 'none';
+if (mode === 'brutto') osztakSzámol(); else osztakSzámolFromNettó();
+}
+function osztakSetSzocho(vanSzocho) {
+osztakSzocho = vanSzocho;
+document.getElementById('osztak-btn-szochoval').style.background = vanSzocho ? 'white' : 'transparent';
+document.getElementById('osztak-btn-szochoval').style.color = vanSzocho ? '#6B46C1' : 'white';
+document.getElementById('osztak-btn-szochoval').style.borderColor = vanSzocho ? 'white' : 'rgba(255,255,255,0.4)';
+document.getElementById('osztak-btn-szochonelkül').style.background = !vanSzocho ? 'white' : 'transparent';
+document.getElementById('osztak-btn-szochonelkül').style.color = !vanSzocho ? '#6B46C1' : 'white';
+document.getElementById('osztak-btn-szochonelkül').style.borderColor = !vanSzocho ? 'white' : 'rgba(255,255,255,0.4)';
+document.getElementById('osztak-szocho-row').style.display = vanSzocho ? 'flex' : 'none';
+if (osztakMode === 'brutto') osztakSzámol(); else osztakSzámolFromNettó();
+}
+function osztakSzámol() {
+const brutto = parseFloat(document.getElementById('osztak-brutto').value) || 0;
+const szja = Math.round(brutto * 0.15);
+const szocho = osztakSzocho ? Math.round(brutto * 0.13) : 0;
+const összes_levonás = szja + szocho;
+const netto = brutto - összes_levonás;
+document.getElementById('osztak-szja').textContent = szja.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('osztak-szocho').textContent = szocho.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('osztak-összes-levonás').textContent = összes_levonás.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('osztak-netto').textContent = netto.toLocaleString('hu-HU') + ' Ft';
+}
+function osztakSzámolFromNettó() {
+const netto = parseFloat(document.getElementById('osztak-netto-input').value) || 0;
+// Nettó = Bruttó - (Bruttó × 0.15) - (Bruttó × 0.13)  ha szocho van
+// Nettó = Bruttó × (1 - 0.15 - 0.13) = Bruttó × 0.72  ha szocho van
+// Nettó = Bruttó × (1 - 0.15) = Bruttó × 0.85  ha nincs szocho
+const szorzó = osztakSzocho ? 0.72 : 0.85;
+const brutto = Math.round(netto / szorzó);
+const szja = Math.round(brutto * 0.15);
+const szocho = osztakSzocho ? Math.round(brutto * 0.13) : 0;
+const összes_levonás = szja + szocho;
+const netto_calc = brutto - összes_levonás;
+document.getElementById('osztak-brutto').value = brutto;
+document.getElementById('osztak-brutto-value').textContent = brutto.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('osztak-szja').textContent = szja.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('osztak-szocho').textContent = szocho.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('osztak-összes-levonás').textContent = összes_levonás.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('osztak-netto').textContent = netto_calc.toLocaleString('hu-HU') + ' Ft';
+}
+document.addEventListener('DOMContentLoaded', function() {
+osztakSzámol();
+});
+// --- OSZTALÉK KALKULATOR VÉGE ---
 function számolÁFA() {
 const input = document.getElementById('afa-indulas-dátum');
 const eredmenyDiv = document.getElementById('afa-eredmeny');
