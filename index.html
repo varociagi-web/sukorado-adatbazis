@@ -98,6 +98,10 @@ overflow: visible;
 transform: translateY(-5px);
 box-shadow: 0 15px 30px rgba(0,0,0,0.2);
 }
+.category-card.active {
+position: relative;
+z-index: 100;
+}
 .category-card h2 {
 color: #A0714F;
 font-size: 1.5em;
@@ -465,6 +469,10 @@ left: 50%;
 transform: translateX(-50%);
 width: 900px;
 max-width: calc(100vw - 80px);
+background: white;
+padding: 20px;
+border-radius: 12px;
+box-shadow: 0 10px 40px rgba(0,0,0,0.15);
 }
 }
 .quick-facts {
