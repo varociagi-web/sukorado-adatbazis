@@ -274,29 +274,98 @@ padding: 15px;
 border-radius: 8px;
 margin: 10px 0;
 }
+/* Figyelj ha... figyelmeztetés */
+.figyelj-box {
+background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+border: 3px solid #991b1b;
+border-radius: 12px;
+padding: 16px 20px;
+margin: 15px 0;
+box-shadow: 0 6px 20px rgba(220, 38, 38, 0.35);
+position: relative;
+overflow: hidden;
+}
+.figyelj-box::before {
+content: '🚩';
+position: absolute;
+top: -10px;
+right: -10px;
+font-size: 4em;
+opacity: 0.15;
+transform: rotate(15deg);
+}
+.figyelj-header {
+color: white;
+font-weight: bold;
+font-size: 1.15em;
+margin-bottom: 12px;
+display: flex;
+align-items: center;
+gap: 8px;
+text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.figyelj-item {
+background: rgba(255, 255, 255, 0.95);
+border-radius: 8px;
+padding: 12px 14px;
+margin: 8px 0;
+}
+.figyelj-item-title {
+font-weight: 600;
+color: #991b1b;
+margin-bottom: 4px;
+font-size: 0.95em;
+}
+.figyelj-item-text {
+color: #374151;
+font-size: 0.9em;
+line-height: 1.5;
+}
 @media (max-width: 768px) {
 body {
 padding: 10px;
 }
 .container {
-padding: 15px;
+padding: 0;
 }
 h1 {
 font-size: 1.8em;
+padding: 0 10px;
+}
+.search-box {
+padding: 12px;
+margin: 0 10px 18px 10px;
+}
+.legend {
+margin: 0 10px 16px 10px;
+padding: 12px 14px;
+gap: 10px;
+}
+.legend-item {
+font-size: 0.8em;
+}
+.quick-nav {
+padding: 8px 10px;
+gap: 6px;
+margin: 0 10px 16px 10px;
+}
+.quick-nav-btn {
+padding: 7px 10px;
+font-size: 0.78em;
+}
+.quick-facts {
+padding: 0 10px;
 }
 .category-grid {
 grid-template-columns: 1fr;
 gap: 12px;
+padding: 0 10px;
 }
 .category-card {
 padding: 18px;
 }
 .category-card h2 {
 font-size: 1.3em;
-}
-.search-box {
-padding: 12px;
-margin-bottom: 18px;
 }
 .search-input {
 padding: 12px 40px 12px 14px;
@@ -331,15 +400,6 @@ padding: 10px;
 }
 .quick-fact-value {
 font-size: 1.3em;
-}
-.quick-nav {
-padding: 8px 10px;
-gap: 6px;
-margin-bottom: 16px;
-}
-.quick-nav-btn {
-padding: 7px 10px;
-font-size: 0.78em;
 }
 }
 .quick-facts {
@@ -389,6 +449,7 @@ font-weight: bold;
 <button class="quick-nav-btn" onclick="quickNav('ÁFA')"><span class="qn-icon">🧾</span> ÁFA</button>
 <button class="quick-nav-btn" onclick="quickNav('TAO')"><span class="qn-icon">🏛️</span> TAO</button>
 <button class="quick-nav-btn" onclick="quickNav('KATA')"><span class="qn-icon">💼</span> KATA</button>
+<button class="quick-nav-btn" onclick="quickNav('Átalányadózás')"><span class="qn-icon">📊</span> Átalányadózás</button>
 <button class="quick-nav-btn" onclick="quickNav('Munkaszüneti')"><span class="qn-icon">📅</span> Munkaszüneti</button>
 <button class="quick-nav-btn" onclick="quickNav('Szabadság')"><span class="qn-icon">🏖️</span> Szabadság</button>
 </div>
@@ -822,6 +883,36 @@ ebből szocho (13%): 48 516 Ft</div>
 <div class="alert-box">
 <strong>📋 Egyéni vállalkozók 2658-as bevallási gyakorisága:</strong><br>
 MINDENKI-re negyedéves (kivéve soron kívüli)
+</div>
+<!-- Figyelj ha... szekció -->
+<div class="figyelj-box">
+<div class="figyelj-header">
+<span style="font-size: 1.3em;">🚨</span>
+<span>FIGYELJ, HA...</span>
+</div>
+<div class="figyelj-item">
+<div class="figyelj-item-title">Évközi indulás</div>
+<div class="figyelj-item-text">Az <strong>adómentes keretet (1 936 800 Ft) NEM kell arányosítani</strong>, de a <strong>bevételi határt (38 736 000 Ft) IGEN</strong> arányosítani kell.</div>
+</div>
+</div>
+<!-- Arányosítási kalkulátor -->
+<div style="background: linear-gradient(135deg, #2E7D5E 0%, #1e5a40 100%); padding: 18px; border-radius: 10px; margin: 10px 0;">
+<div style="color: white; font-weight: bold; font-size: 1.05em; margin-bottom: 12px;">🧮 Bevételi határ arányosítási kalkulátor</div>
+<div style="color: rgba(255,255,255,0.85); font-size: 0.85em; margin-bottom: 10px;">Év közben induló vállalkozás esetén a 38 736 000 Ft-os bevételi határ arányos része: 38 736 000 / 365 × aktív napok</div>
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+<label style="color: white; font-size: 0.9em; white-space: nowrap;">Vállalkozás indulási napja:</label>
+<input type="date" id="atalany-indulas-datum"
+style="padding: 8px 12px; border: none; border-radius: 6px; font-size: 1em; flex: 1; min-width: 180px; max-width: 220px;"
+min="2026-01-01" max="2026-12-31"
+onchange="számolÁtalány()" oninput="számolÁtalány()">
+</div>
+<div id="atalany-eredmeny" style="margin-top: 14px; display: none;">
+<div style="background: rgba(255,255,255,0.15); border-radius: 8px; padding: 12px;">
+<div style="color: rgba(255,255,255,0.8); font-size: 0.82em; margin-bottom: 4px;" id="atalany-napok-text"></div>
+<div style="color: white; font-size: 1.4em; font-weight: bold;" id="atalany-keret-value"></div>
+<div style="color: rgba(255,255,255,0.7); font-size: 0.8em; margin-top: 4px;" id="atalany-keplet-text"></div>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -2438,6 +2529,39 @@ képletText.textContent = 'Teljes évi keret, arányosítás nem szükséges.';
 napokText.innerHTML = 'Indulás: ' + indulásStr + ' → Aktív napok: <strong>' + aktivNapok + ' nap</strong>';
 keretValue.textContent = arányosKeret.toLocaleString('hu-HU') + ' Ft';
 képletText.textContent = '20 000 000 / 365 × ' + aktivNapok + ' = ' + arányosKeret.toLocaleString('hu-HU') + ' Ft';
+}
+}
+function számolÁtalány() {
+const input = document.getElementById('atalany-indulas-datum');
+const eredmenyDiv = document.getElementById('atalany-eredmeny');
+const napokText = document.getElementById('atalany-napok-text');
+const keretValue = document.getElementById('atalany-keret-value');
+const képletText = document.getElementById('atalany-keplet-text');
+if (!input.value) {
+eredmenyDiv.style.display = 'none';
+return;
+}
+const indulas = new Date(input.value);
+const évVége = new Date('2026-12-31');
+const évEleje = new Date('2026-01-01');
+if (indulas < évEleje || indulas > évVége) {
+eredmenyDiv.style.display = 'none';
+return;
+}
+const msPerNap = 24 * 60 * 60 * 1000;
+const aktivNapok = Math.round((évVége - indulas) / msPerNap) + 1;
+const arányosKeret = Math.round((38736000 / 365) * aktivNapok);
+const hónapok = ['január','február','március','április','május','június','július','augusztus','szeptember','október','november','december'];
+const indulásStr = indulas.getFullYear() + '. ' + hónapok[indulas.getMonth()] + ' ' + indulas.getDate() + '.';
+eredmenyDiv.style.display = 'block';
+if (aktivNapok === 365) {
+napokText.innerHTML = 'Január 1-től indul → teljes év';
+keretValue.textContent = '38 736 000 Ft';
+képletText.textContent = 'Teljes évi bevételi határ, arányosítás nem szükséges.';
+} else {
+napokText.innerHTML = 'Indulás: ' + indulásStr + ' → Aktív napok: <strong>' + aktivNapok + ' nap</strong>';
+keretValue.textContent = arányosKeret.toLocaleString('hu-HU') + ' Ft';
+képletText.textContent = '38 736 000 / 365 × ' + aktivNapok + ' = ' + arányosKeret.toLocaleString('hu-HU') + ' Ft';
 }
 }
 function toggleSubSection(id) {
