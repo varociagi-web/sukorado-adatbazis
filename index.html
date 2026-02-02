@@ -398,6 +398,12 @@ max-width: 100%;
 margin-left: 0;
 margin-right: 0;
 }
+.category-card.active .category-content {
+left: 0 !important;
+transform: none !important;
+width: 100% !important;
+position: static !important;
+}
 .category-card h2 {
 font-size: 1.3em;
 }
@@ -1259,6 +1265,63 @@ onchange="számolÁtalány()" oninput="számolÁtalány()">
 <div class="data-label">ÁFA alanyi mentesség határa</div>
 <div class="data-value">20 000 000 Ft/év</div>
 </div>
+<!-- ÁFA KALKULATOR -->
+<div style="background: linear-gradient(135deg, #2196F3 0%, #1565C0 100%); padding: 18px; border-radius: 10px; margin: 15px 0;">
+<div style="color: white; font-weight: bold; font-size: 1.05em; margin-bottom: 4px;">🧮 ÁFA kalkulátor</div>
+<div style="color: rgba(255,255,255,0.8); font-size: 0.82em; margin-bottom: 14px;">Írj be bármelyik értéket – számítja a többi kettőt</div>
+<!-- ÁFA kulcs választó -->
+<div style="display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap;">
+<button id="afa-btn-27" onclick="afaSetKulcs(27)"
+style="flex: 1; min-width: 90px; padding: 6px; border: 2px solid white; border-radius: 6px; background: white; color: #2196F3; font-weight: bold; font-size: 0.85em; cursor: pointer;">
+27%
+</button>
+<button id="afa-btn-18" onclick="afaSetKulcs(18)"
+style="flex: 1; min-width: 90px; padding: 6px; border: 2px solid rgba(255,255,255,0.4); border-radius: 6px; background: transparent; color: white; font-weight: bold; font-size: 0.85em; cursor: pointer;">
+18%
+</button>
+<button id="afa-btn-5" onclick="afaSetKulcs(5)"
+style="flex: 1; min-width: 90px; padding: 6px; border: 2px solid rgba(255,255,255,0.4); border-radius: 6px; background: transparent; color: white; font-weight: bold; font-size: 0.85em; cursor: pointer;">
+5%
+</button>
+</div>
+<!-- Input mezők -->
+<div style="display: flex; flex-direction: column; gap: 10px;">
+<div>
+<label style="color: rgba(255,255,255,0.85); font-size: 0.8em;">Nettó ár (ÁFA nélkül, Ft)</label>
+<input type="number" id="afa-netto" min="0" step="1" placeholder="Nettó"
+style="width: 100%; padding: 8px 10px; border: none; border-radius: 6px; font-size: 1.05em; margin-top: 3px;"
+oninput="afaSzámolFromNettó()">
+</div>
+<div>
+<label style="color: rgba(255,255,255,0.85); font-size: 0.8em;">ÁFA összege (Ft)</label>
+<input type="number" id="afa-osszeg" min="0" step="1" placeholder="ÁFA"
+style="width: 100%; padding: 8px 10px; border: none; border-radius: 6px; font-size: 1.05em; margin-top: 3px;"
+oninput="afaSzámolFromÁFA()">
+</div>
+<div>
+<label style="color: rgba(255,255,255,0.85); font-size: 0.8em;">Bruttó ár (ÁFA-val, Ft)</label>
+<input type="number" id="afa-brutto" min="0" step="1" placeholder="Bruttó"
+style="width: 100%; padding: 8px 10px; border: none; border-radius: 6px; font-size: 1.05em; margin-top: 3px;"
+oninput="afaSzámolFromBruttó()">
+</div>
+</div>
+<!-- Eredmény kiemelés -->
+<div style="margin-top: 14px; background: rgba(255,255,255,0.15); border-radius: 8px; padding: 12px; display: flex; justify-content: space-around; text-align: center; flex-wrap: wrap; gap: 10px;">
+<div style="flex: 1; min-width: 100px;">
+<div style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Nettó</div>
+<div id="afa-netto-result" style="color: white; font-size: 1.2em; font-weight: bold;">0 Ft</div>
+</div>
+<div style="flex: 1; min-width: 100px;">
+<div style="color: rgba(255,255,255,0.7); font-size: 0.75em;">ÁFA <span id="afa-kulcs-label">(27%)</span></div>
+<div id="afa-osszeg-result" style="color: white; font-size: 1.2em; font-weight: bold;">0 Ft</div>
+</div>
+<div style="flex: 1; min-width: 100px;">
+<div style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Bruttó</div>
+<div id="afa-brutto-result" style="color: white; font-size: 1.2em; font-weight: bold;">0 Ft</div>
+</div>
+</div>
+</div>
+<!-- ÁFA KALKULATOR VÉGE -->
 <div class="data-item" style="cursor: pointer; background: #fff3cd; border-left: 4px solid #ffc107;" onclick="event.stopPropagation(); toggleSubSection('afa-le-nem-vonhato')">
 <div class="data-label" style="display: flex; justify-content: space-between; align-items: center;">
 <span>❌ Le nem vonható ÁFA szabályok</span>
@@ -2801,6 +2864,59 @@ document.addEventListener('DOMContentLoaded', function() {
 osztakSzámol();
 });
 // --- OSZTALÉK KALKULATOR VÉGE ---
+// --- ÁFA KALKULATOR ---
+let afaKulcs = 27; // 27, 18, vagy 5
+function afaSetKulcs(kulcs) {
+afaKulcs = kulcs;
+// Gombok frissítése
+['27', '18', '5'].forEach(k => {
+const btn = document.getElementById(`afa-btn-${k}`);
+const active = (k == kulcs);
+btn.style.background = active ? 'white' : 'transparent';
+btn.style.color = active ? '#2196F3' : 'white';
+btn.style.borderColor = active ? 'white' : 'rgba(255,255,255,0.4)';
+});
+document.getElementById('afa-kulcs-label').textContent = `(${kulcs}%)`;
+// Újraszámol az aktuális értékekkel
+const netto = parseFloat(document.getElementById('afa-netto').value);
+const afa = parseFloat(document.getElementById('afa-osszeg').value);
+const brutto = parseFloat(document.getElementById('afa-brutto').value);
+if (!isNaN(netto)) afaSzámolFromNettó();
+else if (!isNaN(afa)) afaSzámolFromÁFA();
+else if (!isNaN(brutto)) afaSzámolFromBruttó();
+}
+function afaSzámolFromNettó() {
+const netto = parseFloat(document.getElementById('afa-netto').value) || 0;
+const afa = Math.round(netto * afaKulcs / 100);
+const brutto = netto + afa;
+document.getElementById('afa-osszeg').value = afa;
+document.getElementById('afa-brutto').value = brutto;
+afaFrissítEredmény(netto, afa, brutto);
+}
+function afaSzámolFromÁFA() {
+const afa = parseFloat(document.getElementById('afa-osszeg').value) || 0;
+const netto = Math.round(afa * 100 / afaKulcs);
+const brutto = netto + afa;
+document.getElementById('afa-netto').value = netto;
+document.getElementById('afa-brutto').value = brutto;
+afaFrissítEredmény(netto, afa, brutto);
+}
+function afaSzámolFromBruttó() {
+const brutto = parseFloat(document.getElementById('afa-brutto').value) || 0;
+// Bruttó = Nettó × (1 + kulcs/100)
+// Nettó = Bruttó / (1 + kulcs/100)
+const netto = Math.round(brutto / (1 + afaKulcs / 100));
+const afa = brutto - netto;
+document.getElementById('afa-netto').value = netto;
+document.getElementById('afa-osszeg').value = afa;
+afaFrissítEredmény(netto, afa, brutto);
+}
+function afaFrissítEredmény(netto, afa, brutto) {
+document.getElementById('afa-netto-result').textContent = netto.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('afa-osszeg-result').textContent = afa.toLocaleString('hu-HU') + ' Ft';
+document.getElementById('afa-brutto-result').textContent = brutto.toLocaleString('hu-HU') + ' Ft';
+}
+// --- ÁFA KALKULATOR VÉGE ---
 function számolÁFA() {
 const input = document.getElementById('afa-indulas-dátum');
 const eredmenyDiv = document.getElementById('afa-eredmeny');
