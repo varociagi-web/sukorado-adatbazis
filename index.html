@@ -1619,6 +1619,23 @@ A kisvállalkozóknak lehetőségük van választani egy új, egyszerűsített a
 <div class="data-note">A bevételi értékhatár (25M Ft) átlépése miatt az érintett adóév és a következő adóév vonatkozásában nem alkalmazhatja ezt a módszert.</div>
 </div>
 </div>
+<!-- HIPA záróbevallás kalkulátor -->
+<div style="background: linear-gradient(135deg, #3B6BA5 0%, #2d5380 100%); padding: 18px; border-radius: 10px; margin: 15px 0;">
+<div style="color: white; font-weight: bold; font-size: 1.05em; margin-bottom: 12px;">📅 EV szünetelés – HIPA záróbevallás határidő számító</div>
+<div style="color: rgba(255,255,255,0.85); font-size: 0.85em; margin-bottom: 10px;">A szünetelés kezdőnapjától számított 180. napra vonatkozóan kell HIPA záróbevallást beadni</div>
+<div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+<label style="color: white; font-size: 0.9em; white-space: nowrap;">Szünetelés kezdőnapja:</label>
+<input type="date" id="hipa-szuneteles-datum"
+style="padding: 8px 12px; border: none; border-radius: 6px; font-size: 1em; flex: 1; min-width: 180px; max-width: 220px;"
+onchange="számolHIPA()" oninput="számolHIPA()">
+</div>
+<div id="hipa-eredmeny" style="margin-top: 14px; display: none;">
+<div style="background: rgba(255,255,255,0.15); border-radius: 8px; padding: 12px;">
+<div style="color: rgba(255,255,255,0.8); font-size: 0.82em; margin-bottom: 4px;" id="hipa-szoveg"></div>
+<div style="color: white; font-size: 1.4em; font-weight: bold;" id="hipa-hatarido"></div>
+</div>
+</div>
+</div>
 </div>
 </div>
 <!-- Cégautóadó -->
@@ -2599,6 +2616,25 @@ napokText.innerHTML = 'Indulás: ' + indulásStr + ' → Aktív napok: <strong>'
 keretValue.textContent = arányosKeret.toLocaleString('hu-HU') + ' Ft';
 képletText.textContent = '38 736 000 / 365 × ' + aktivNapok + ' = ' + arányosKeret.toLocaleString('hu-HU') + ' Ft';
 }
+}
+function számolHIPA() {
+const input = document.getElementById('hipa-szuneteles-datum');
+const eredmenyDiv = document.getElementById('hipa-eredmeny');
+const szovegDiv = document.getElementById('hipa-szoveg');
+const hatarido = document.getElementById('hipa-hatarido');
+if (!input.value) {
+eredmenyDiv.style.display = 'none';
+return;
+}
+const kezdoNap = new Date(input.value);
+const msPerNap = 24 * 60 * 60 * 1000;
+const hatarNap = new Date(kezdoNap.getTime() + (179 * msPerNap));
+const hónapok = ['január','február','március','április','május','június','július','augusztus','szeptember','október','november','december'];
+const kezdoStr = kezdoNap.getFullYear() + '. ' + hónapok[kezdoNap.getMonth()] + ' ' + kezdoNap.getDate() + '.';
+const hatarStr = hatarNap.getFullYear() + '. ' + hónapok[hatarNap.getMonth()] + ' ' + hatarNap.getDate() + '.';
+eredmenyDiv.style.display = 'block';
+szovegDiv.innerHTML = 'Szünetelés kezdete: <strong>' + kezdoStr + '</strong> → 180. nap:';
+hatarido.textContent = hatarStr;
 }
 function toggleSubSection(id) {
 const section = document.getElementById(id);
