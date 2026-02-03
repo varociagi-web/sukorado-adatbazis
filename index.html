@@ -1943,13 +1943,6 @@ Teljesítmény kategória: <span id="cegauto-kategoria" style="font-weight: bold
 <div style="background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); padding: 18px; border-radius: 10px; margin: 15px 0;">
 <div style="color: white; font-weight: bold; font-size: 1.05em; margin-bottom: 4px;">📊 500 km költségelszámolás (Egyéni vállalkozó)</div>
 <div style="color: rgba(255,255,255,0.8); font-size: 0.82em; margin-bottom: 14px;">Havi 500 km átalány elszámolása útnyilvántartás nélkül, cégautóadó-mentesen</div>
-<!-- Fogyasztás -->
-<div style="margin-bottom: 12px;">
-<label style="color: rgba(255,255,255,0.85); font-size: 0.8em;">Norma szerinti fogyasztás (l/100km)</label>
-<input type="number" id="km500-fogyasztas" min="0" step="0.1" placeholder="pl. 6.5"
-style="width: 100%; padding: 8px 10px; border: none; border-radius: 6px; font-size: 1.05em; margin-top: 3px;"
-oninput="km500Számol()">
-</div>
 <!-- Üzemanyag típus választó -->
 <div style="margin-bottom: 12px;">
 <label style="color: rgba(255,255,255,0.85); font-size: 0.8em; display: block; margin-bottom: 6px;">Üzemanyag típus (2025-ös NAV árak)</label>
@@ -1964,78 +1957,90 @@ Gázolaj
 </button>
 </div>
 </div>
+<!-- Hengerűrtartalom -->
+<div style="margin-bottom: 12px;">
+<label style="color: rgba(255,255,255,0.85); font-size: 0.8em;">Hengerűrtartalom (cm³)</label>
+<input type="number" id="km500-henger" min="0" step="1" placeholder="pl. 1598"
+style="width: 100%; padding: 8px 10px; border: none; border-radius: 6px; font-size: 1.05em; margin-top: 3px;"
+oninput="km500Számol()">
+</div>
+<!-- Fogyasztási norma (automatikus) -->
+<div style="margin-bottom: 14px; padding: 10px; background: rgba(255,255,255,0.15); border-radius: 6px;">
+<div style="color: rgba(255,255,255,0.7); font-size: 0.75em; margin-bottom: 3px;">NAV szerinti fogyasztási norma</div>
+<div id="km500-fogyasztas-display" style="color: white; font-size: 1.2em; font-weight: bold;">— l/100km</div>
+</div>
 <!-- Havi üzemanyagárak -->
 <div style="color: rgba(255,255,255,0.85); font-size: 0.8em; margin-bottom: 8px; font-weight: bold;">NAV havi üzemanyagárak (Ft/liter)</div>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin-bottom: 14px;">
 <div>
 <label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Január</label>
-<input type="number" id="km500-ar-1" min="0" step="1" placeholder="625"
+<input type="number" id="km500-ar-1" min="0" step="1" placeholder="626"
 style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
 oninput="km500Számol()">
 </div>
 <div>
 <label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Február</label>
-<input type="number" id="km500-ar-2" min="0" step="1" placeholder="625"
+<input type="number" id="km500-ar-2" min="0" step="1" placeholder="631"
 style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
 oninput="km500Számol()">
 </div>
 <div>
 <label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Március</label>
-<input type="number" id="km500-ar-3" min="0" step="1" placeholder="625"
+<input type="number" id="km500-ar-3" min="0" step="1" placeholder="638"
 style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
 oninput="km500Számol()">
 </div>
 <div>
 <label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Április</label>
-<input type="number" id="km500-ar-4" min="0" step="1" placeholder="625"
+<input type="number" id="km500-ar-4" min="0" step="1" placeholder="624"
 style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
 oninput="km500Számol()">
 </div>
 <div>
 <label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Május</label>
-<input type="number" id="km500-ar-5" min="0" step="1" placeholder="625"
+<input type="number" id="km500-ar-5" min="0" step="1" placeholder="612"
 style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
 oninput="km500Számol()">
 </div>
 <div>
 <label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Június</label>
-<input type="number" id="km500-ar-6" min="0" step="1" placeholder="625"
+<input type="number" id="km500-ar-6" min="0" step="1" placeholder="594"
 style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
 oninput="km500Számol()">
 </div>
 <div>
 <label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Július</label>
-<input type="number" id="km500-ar-7" min="0" step="1" placeholder="625"
+<input type="number" id="km500-ar-7" min="0" step="1" placeholder="592"
 style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
 oninput="km500Számol()">
 </div>
 <div>
 <label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Augusztus</label>
-<input type="number" id="km500-ar-8" min="0" step="1" placeholder="625"
+<input type="number" id="km500-ar-8" min="0" step="1" placeholder="596"
 style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
 oninput="km500Számol()">
 </div>
 <div>
 <label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Szeptember</label>
-<input type="number" id="km500-ar-9" min="0" step="1" placeholder="625"
+<input type="number" id="km500-ar-9" min="0" step="1" placeholder="590"
 style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
 oninput="km500Számol()">
 </div>
 <div>
 <label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Október</label>
-<input type="number" id="km500-ar-10" min="0" step="1" placeholder="625"
+<input type="number" id="km500-ar-10" min="0" step="1" placeholder="593"
 style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
 oninput="km500Számol()">
 </div>
 <div>
 <label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">November</label>
-<input type="number" id="km500-ar-11" min="0" step="1" placeholder="625"
+<input type="number" id="km500-ar-11" min="0" step="1" placeholder="591"
 style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
 oninput="km500Számol()">
 </div>
 <div>
 <label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">December</label>
-<input type="number" id="km500-ar-12" min="0" step="1" placeholder="625"
+<input type="number" id="km500-ar-12" min="0" step="1" placeholder="580"
 style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
 oninput="km500Számol()">
 </div>
@@ -3191,7 +3196,35 @@ const nav2025Arak = {
   benzin: [626, 631, 638, 624, 612, 594, 592, 596, 590, 593, 591, 580],  // jan-dec
   gazolaj: [638, 651, 649, 638, 621, 603, 586, 600, 610, 597, 596, 587]  // jan-dec
 };
+
+// NAV fogyasztási norma táblázatok (cm³ → l/100km)
+const fogyasztasiNorma = {
+  benzin: [
+    {max: 1000, norma: 7.6},
+    {max: 1500, norma: 8.6},
+    {max: 2000, norma: 9.5},
+    {max: 3000, norma: 11.4},
+    {max: 999999, norma: 13.3}  // 3001 felett
+  ],
+  gazolaj: [
+    {max: 1500, norma: 5.7},
+    {max: 2000, norma: 6.7},
+    {max: 3000, norma: 7.6},
+    {max: 999999, norma: 9.5}  // 3001 felett
+  ]
+};
+
 let km500UzemanyagTipus = 'benzin';
+
+function km500GetFogyasztas(henger, tipus) {
+  const tabla = fogyasztasiNorma[tipus];
+  for (let sor of tabla) {
+    if (henger <= sor.max) {
+      return sor.norma;
+    }
+  }
+  return 0;
+}
 
 function km500SetUzemanyag(tipus) {
   km500UzemanyagTipus = tipus;
@@ -3211,13 +3244,18 @@ function km500SetUzemanyag(tipus) {
 }
 
 function km500Számol() {
-  const fogyasztas = parseFloat(document.getElementById('km500-fogyasztas').value) || 0;
+  const henger = parseInt(document.getElementById('km500-henger').value) || 0;
   
-  if (fogyasztas === 0) {
+  if (henger === 0) {
+    document.getElementById('km500-fogyasztas-display').textContent = '— l/100km';
     document.getElementById('km500-uzemanyag-eves').textContent = '0 Ft';
     document.getElementById('km500-eves-ossz').textContent = '0 Ft';
     return;
   }
+  
+  // Fogyasztási norma meghatározása
+  const fogyasztas = km500GetFogyasztas(henger, km500UzemanyagTipus);
+  document.getElementById('km500-fogyasztas-display').textContent = fogyasztas + ' l/100km';
   
   // Összes havi üzemanyag költség összege
   let uzemanyagEvesOssz = 0;
