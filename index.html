@@ -1890,6 +1890,178 @@ onchange="számolHIPA()" oninput="számolHIPA()">
 </tbody>
 </table>
 </div>
+<!-- CÉGAUTÓADÓ KALKULATOR -->
+<div style="background: linear-gradient(135deg, #10B981 0%, #059669 100%); padding: 18px; border-radius: 10px; margin: 15px 0;">
+<div style="color: white; font-weight: bold; font-size: 1.05em; margin-bottom: 4px;">🚗 Cégautóadó kalkulátor</div>
+<div style="color: rgba(255,255,255,0.8); font-size: 0.82em; margin-bottom: 14px;">Adja meg a gépjármű teljesítményét és környezetvédelmi osztályát</div>
+<!-- Teljesítmény input -->
+<div style="display: flex; flex-direction: column; gap: 12px;">
+<div>
+<label style="color: rgba(255,255,255,0.85); font-size: 0.8em;">Teljesítmény (kW)</label>
+<input type="number" id="cegauto-kw" min="0" step="1" placeholder="pl. 85"
+style="width: 100%; padding: 8px 10px; border: none; border-radius: 6px; font-size: 1.05em; margin-top: 3px;"
+oninput="cegautoSzámol()">
+</div>
+<!-- Környezetvédelmi osztály választó -->
+<div>
+<label style="color: rgba(255,255,255,0.85); font-size: 0.8em; display: block; margin-bottom: 6px;">Környezetvédelmi osztály</label>
+<div style="display: flex; gap: 6px; flex-wrap: wrap;">
+<button id="cegauto-btn-0-4" onclick="cegautoSetKorny('0-4')"
+style="flex: 1; min-width: 110px; padding: 7px; border: 2px solid white; border-radius: 6px; background: white; color: #10B981; font-weight: bold; font-size: 0.85em; cursor: pointer;">
+"0"-"4"
+</button>
+<button id="cegauto-btn-5" onclick="cegautoSetKorny('5')"
+style="flex: 1; min-width: 110px; padding: 7px; border: 2px solid rgba(255,255,255,0.4); border-radius: 6px; background: transparent; color: white; font-weight: bold; font-size: 0.85em; cursor: pointer;">
+"5", "14-15"
+</button>
+<button id="cegauto-btn-6-10" onclick="cegautoSetKorny('6-10')"
+style="flex: 1; min-width: 110px; padding: 7px; border: 2px solid rgba(255,255,255,0.4); border-radius: 6px; background: transparent; color: white; font-weight: bold; font-size: 0.85em; cursor: pointer;">
+"6"-"10"
+</button>
+</div>
+</div>
+</div>
+<!-- Eredmény -->
+<div style="margin-top: 14px; background: rgba(255,255,255,0.15); border-radius: 8px; padding: 14px;">
+<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+<div style="flex: 1; min-width: 140px;">
+<div style="color: rgba(255,255,255,0.7); font-size: 0.75em; margin-bottom: 2px;">Éves adó</div>
+<div id="cegauto-eves" style="color: white; font-size: 1.4em; font-weight: bold;">0 Ft</div>
+</div>
+<div style="flex: 1; min-width: 140px;">
+<div style="color: rgba(255,255,255,0.7); font-size: 0.75em; margin-bottom: 2px;">Havi adó</div>
+<div id="cegauto-havi" style="color: white; font-size: 1.4em; font-weight: bold;">0 Ft</div>
+</div>
+</div>
+<div style="color: rgba(255,255,255,0.6); font-size: 0.75em; margin-top: 8px; text-align: center;">
+Teljesítmény kategória: <span id="cegauto-kategoria" style="font-weight: bold;">-</span>
+</div>
+</div>
+</div>
+<!-- CÉGAUTÓADÓ KALKULATOR VÉGE -->
+<!-- 500 KM KÖLTSÉGELSZÁMOLÁS KALKULATOR -->
+<div style="background: linear-gradient(135deg, #F59E0B 0%, #D97706 100%); padding: 18px; border-radius: 10px; margin: 15px 0;">
+<div style="color: white; font-weight: bold; font-size: 1.05em; margin-bottom: 4px;">📊 500 km költségelszámolás (Egyéni vállalkozó)</div>
+<div style="color: rgba(255,255,255,0.8); font-size: 0.82em; margin-bottom: 14px;">Havi 500 km átalány elszámolása útnyilvántartás nélkül, cégautóadó-mentesen</div>
+<!-- Fogyasztás -->
+<div style="margin-bottom: 12px;">
+<label style="color: rgba(255,255,255,0.85); font-size: 0.8em;">Norma szerinti fogyasztás (l/100km)</label>
+<input type="number" id="km500-fogyasztas" min="0" step="0.1" placeholder="pl. 6.5"
+style="width: 100%; padding: 8px 10px; border: none; border-radius: 6px; font-size: 1.05em; margin-top: 3px;"
+oninput="km500Számol()">
+</div>
+<!-- Üzemanyag típus választó -->
+<div style="margin-bottom: 12px;">
+<label style="color: rgba(255,255,255,0.85); font-size: 0.8em; display: block; margin-bottom: 6px;">Üzemanyag típus (2025-ös NAV árak)</label>
+<div style="display: flex; gap: 8px;">
+<button id="km500-btn-benzin" onclick="km500SetUzemanyag('benzin')"
+style="flex: 1; padding: 7px; border: 2px solid white; border-radius: 6px; background: white; color: #F59E0B; font-weight: bold; font-size: 0.85em; cursor: pointer;">
+Benzin (ESZ-95)
+</button>
+<button id="km500-btn-gazolaj" onclick="km500SetUzemanyag('gazolaj')"
+style="flex: 1; padding: 7px; border: 2px solid rgba(255,255,255,0.4); border-radius: 6px; background: transparent; color: white; font-weight: bold; font-size: 0.85em; cursor: pointer;">
+Gázolaj
+</button>
+</div>
+</div>
+<!-- Havi üzemanyagárak -->
+<div style="color: rgba(255,255,255,0.85); font-size: 0.8em; margin-bottom: 8px; font-weight: bold;">NAV havi üzemanyagárak (Ft/liter)</div>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 8px; margin-bottom: 14px;">
+<div>
+<label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Január</label>
+<input type="number" id="km500-ar-1" min="0" step="1" placeholder="625"
+style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
+oninput="km500Számol()">
+</div>
+<div>
+<label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Február</label>
+<input type="number" id="km500-ar-2" min="0" step="1" placeholder="625"
+style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
+oninput="km500Számol()">
+</div>
+<div>
+<label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Március</label>
+<input type="number" id="km500-ar-3" min="0" step="1" placeholder="625"
+style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
+oninput="km500Számol()">
+</div>
+<div>
+<label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Április</label>
+<input type="number" id="km500-ar-4" min="0" step="1" placeholder="625"
+style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
+oninput="km500Számol()">
+</div>
+<div>
+<label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Május</label>
+<input type="number" id="km500-ar-5" min="0" step="1" placeholder="625"
+style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
+oninput="km500Számol()">
+</div>
+<div>
+<label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Június</label>
+<input type="number" id="km500-ar-6" min="0" step="1" placeholder="625"
+style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
+oninput="km500Számol()">
+</div>
+<div>
+<label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Július</label>
+<input type="number" id="km500-ar-7" min="0" step="1" placeholder="625"
+style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
+oninput="km500Számol()">
+</div>
+<div>
+<label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Augusztus</label>
+<input type="number" id="km500-ar-8" min="0" step="1" placeholder="625"
+style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
+oninput="km500Számol()">
+</div>
+<div>
+<label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Szeptember</label>
+<input type="number" id="km500-ar-9" min="0" step="1" placeholder="625"
+style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
+oninput="km500Számol()">
+</div>
+<div>
+<label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Október</label>
+<input type="number" id="km500-ar-10" min="0" step="1" placeholder="625"
+style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
+oninput="km500Számol()">
+</div>
+<div>
+<label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">November</label>
+<input type="number" id="km500-ar-11" min="0" step="1" placeholder="625"
+style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
+oninput="km500Számol()">
+</div>
+<div>
+<label style="color: rgba(255,255,255,0.7); font-size: 0.75em;">December</label>
+<input type="number" id="km500-ar-12" min="0" step="1" placeholder="625"
+style="width: 100%; padding: 6px 8px; border: none; border-radius: 6px; font-size: 0.95em; margin-top: 2px;"
+oninput="km500Számol()">
+</div>
+</div>
+<!-- Eredmény -->
+<div style="background: rgba(255,255,255,0.15); border-radius: 8px; padding: 14px;">
+<div style="display: flex; flex-direction: column; gap: 8px;">
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div style="color: rgba(255,255,255,0.7); font-size: 0.85em;">Üzemanyag költség (éves)</div>
+<div id="km500-uzemanyag-eves" style="color: white; font-size: 1.1em; font-weight: bold;">0 Ft</div>
+</div>
+<div style="display: flex; justify-content: space-between; align-items: center;">
+<div style="color: rgba(255,255,255,0.7); font-size: 0.85em;">Fenntartási költség (12 hó × 7.500 Ft)</div>
+<div style="color: white; font-size: 1.1em; font-weight: bold;">90 000 Ft</div>
+</div>
+<div style="border-top: 1px solid rgba(255,255,255,0.3); padding-top: 8px; margin-top: 4px; display: flex; justify-content: space-between; align-items: center;">
+<div style="color: rgba(255,255,255,0.85); font-size: 1em; font-weight: bold;">ÉVES ÖSSZESEN</div>
+<div id="km500-eves-ossz" style="color: white; font-size: 1.5em; font-weight: bold;">0 Ft</div>
+</div>
+</div>
+<div style="color: rgba(255,255,255,0.6); font-size: 0.75em; margin-top: 10px; padding: 8px; background: rgba(0,0,0,0.2); border-radius: 6px;">
+⚠️ Ez az elszámolási mód teljes évre kötelező. Nem kell útnyilvántartást vezetni és cégautóadót fizetni. 500 km felett már útnyilvántartás és cégautóadó szükséges.
+</div>
+</div>
+</div>
+<!-- 500 KM KÖLTSÉGELSZÁMOLÁS KALKULATOR VÉGE -->
 </div>
 </div>
 <!-- SZJA és Adók -->
@@ -2960,6 +3132,121 @@ document.getElementById('afa-osszeg-result').textContent = afa.toLocaleString('h
 document.getElementById('afa-brutto-result').textContent = brutto.toLocaleString('hu-HU') + ' Ft';
 }
 // --- ÁFA KALKULATOR VÉGE ---
+// --- CÉGAUTÓADÓ KALKULATOR ---
+let cegautoKorny = '0-4'; // '0-4', '5', vagy '6-10'
+// Adó táblázat: [teljesítmény_kategória][környezetvédelmi_osztály]
+const cegautoAdoTabla = {
+  '0-50': { '0-4': 38500, '5': 20000, '6-10': 17500 },
+  '51-90': { '0-4': 51000, '5': 25000, '6-10': 20000 },
+  '91-120': { '0-4': 76000, '5': 51000, '6-10': 25000 },
+  '120+': { '0-4': 101000, '5': 76000, '6-10': 51000 }
+};
+function cegautoSetKorny(korny) {
+  cegautoKorny = korny;
+  // Gombok frissítése
+  ['0-4', '5', '6-10'].forEach(k => {
+    const btn = document.getElementById(`cegauto-btn-${k}`);
+    const active = (k === korny);
+    btn.style.background = active ? 'white' : 'transparent';
+    btn.style.color = active ? '#10B981' : 'white';
+    btn.style.borderColor = active ? 'white' : 'rgba(255,255,255,0.4)';
+  });
+  cegautoSzámol();
+}
+function cegautoSzámol() {
+  const kw = parseFloat(document.getElementById('cegauto-kw').value) || 0;
+  if (kw === 0) {
+    document.getElementById('cegauto-eves').textContent = '0 Ft';
+    document.getElementById('cegauto-havi').textContent = '0 Ft';
+    document.getElementById('cegauto-kategoria').textContent = '-';
+    return;
+  }
+  // Teljesítmény kategória meghatározása
+  let kategoria;
+  let kategoriaText;
+  if (kw <= 50) {
+    kategoria = '0-50';
+    kategoriaText = '0-50 kW';
+  } else if (kw <= 90) {
+    kategoria = '51-90';
+    kategoriaText = '51-90 kW';
+  } else if (kw <= 120) {
+    kategoria = '91-120';
+    kategoriaText = '91-120 kW';
+  } else {
+    kategoria = '120+';
+    kategoriaText = '120+ kW';
+  }
+  // Éves adó lekérése
+  const evesAdo = cegautoAdoTabla[kategoria][cegautoKorny];
+  const haviAdo = Math.round(evesAdo / 12);
+  document.getElementById('cegauto-eves').textContent = evesAdo.toLocaleString('hu-HU') + ' Ft';
+  document.getElementById('cegauto-havi').textContent = haviAdo.toLocaleString('hu-HU') + ' Ft';
+  document.getElementById('cegauto-kategoria').textContent = kategoriaText;
+}
+// --- CÉGAUTÓADÓ KALKULATOR VÉGE ---
+// --- 500 KM KÖLTSÉGELSZÁMOLÁS KALKULATOR ---
+// 2025-ös NAV üzemanyagárak
+const nav2025Arak = {
+  benzin: [626, 631, 638, 624, 612, 594, 592, 596, 590, 593, 591, 580],  // jan-dec
+  gazolaj: [638, 651, 649, 638, 621, 603, 586, 600, 610, 597, 596, 587]  // jan-dec
+};
+let km500UzemanyagTipus = 'benzin';
+
+function km500SetUzemanyag(tipus) {
+  km500UzemanyagTipus = tipus;
+  document.getElementById('km500-btn-benzin').style.background = (tipus === 'benzin') ? 'white' : 'transparent';
+  document.getElementById('km500-btn-benzin').style.color = (tipus === 'benzin') ? '#F59E0B' : 'white';
+  document.getElementById('km500-btn-benzin').style.borderColor = (tipus === 'benzin') ? 'white' : 'rgba(255,255,255,0.4)';
+  document.getElementById('km500-btn-gazolaj').style.background = (tipus === 'gazolaj') ? 'white' : 'transparent';
+  document.getElementById('km500-btn-gazolaj').style.color = (tipus === 'gazolaj') ? '#F59E0B' : 'white';
+  document.getElementById('km500-btn-gazolaj').style.borderColor = (tipus === 'gazolaj') ? 'white' : 'rgba(255,255,255,0.4)';
+  
+  // Árak frissítése
+  const arak = nav2025Arak[tipus];
+  for (let i = 1; i <= 12; i++) {
+    document.getElementById(`km500-ar-${i}`).value = arak[i-1];
+  }
+  km500Számol();
+}
+
+function km500Számol() {
+  const fogyasztas = parseFloat(document.getElementById('km500-fogyasztas').value) || 0;
+  
+  if (fogyasztas === 0) {
+    document.getElementById('km500-uzemanyag-eves').textContent = '0 Ft';
+    document.getElementById('km500-eves-ossz').textContent = '0 Ft';
+    return;
+  }
+  
+  // Összes havi üzemanyag költség összege
+  let uzemanyagEvesOssz = 0;
+  
+  // Minden hónapra külön számolunk
+  for (let i = 1; i <= 12; i++) {
+    const ar = parseFloat(document.getElementById(`km500-ar-${i}`).value) || 0;
+    if (ar > 0) {
+      // Havi 500 km üzemanyag költsége: Fogyasztás (l/100km) × 500 km / 100 × Ár (Ft/l)
+      const uzemanyagHavi = Math.round((fogyasztas * 500 / 100) * ar);
+      uzemanyagEvesOssz += uzemanyagHavi;
+    }
+  }
+  
+  // Fenntartási költség: 12 hó × 7500 Ft = 90.000 Ft
+  const fenntartasEves = 90000;
+  
+  // Éves összesen
+  const evesOssz = uzemanyagEvesOssz + fenntartasEves;
+  
+  document.getElementById('km500-uzemanyag-eves').textContent = uzemanyagEvesOssz.toLocaleString('hu-HU') + ' Ft';
+  document.getElementById('km500-eves-ossz').textContent = evesOssz.toLocaleString('hu-HU') + ' Ft';
+}
+
+// Inicializálás - benzin árak betöltése
+document.addEventListener('DOMContentLoaded', function() {
+  km500SetUzemanyag('benzin');
+});
+// --- 500 KM KÖLTSÉGELSZÁMOLÁS KALKULATOR VÉGE ---
 function számolÁFA() {
 const input = document.getElementById('afa-indulas-dátum');
 const eredmenyDiv = document.getElementById('afa-eredmeny');
