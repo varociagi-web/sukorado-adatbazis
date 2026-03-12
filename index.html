@@ -1896,6 +1896,9 @@ onchange="számolHIPA()" oninput="számolHIPA()">
 <div class="category-card card-tarsasag" onclick="toggleCategory(this)">
 <h2><span class="category-icon">🚗</span> Cégautóadó</h2>
 <div class="category-content">
+<div class="alert-box">
+<strong>🚗 Cégautóadó (havi összegek):</strong>
+</div>
 <div class="table-container">
 <table>
 <thead>
@@ -1909,27 +1912,27 @@ onchange="számolHIPA()" oninput="számolHIPA()">
 <tbody>
 <tr>
 <td>0-50</td>
-<td>38 500 Ft</td>
-<td>20 000 Ft</td>
-<td>17 500 Ft</td>
+<td>38 500 Ft/hó</td>
+<td>20 000 Ft/hó</td>
+<td>17 500 Ft/hó</td>
 </tr>
 <tr>
 <td>51-90</td>
-<td>51 000 Ft</td>
-<td>25 000 Ft</td>
-<td>20 000 Ft</td>
+<td>51 000 Ft/hó</td>
+<td>25 000 Ft/hó</td>
+<td>20 000 Ft/hó</td>
 </tr>
 <tr>
 <td>91-120</td>
-<td>76 000 Ft</td>
-<td>51 000 Ft</td>
-<td>25 000 Ft</td>
+<td>76 000 Ft/hó</td>
+<td>51 000 Ft/hó</td>
+<td>25 000 Ft/hó</td>
 </tr>
 <tr>
 <td>120 felett</td>
-<td>101 000 Ft</td>
-<td>76 000 Ft</td>
-<td>51 000 Ft</td>
+<td>101 000 Ft/hó</td>
+<td>76 000 Ft/hó</td>
+<td>51 000 Ft/hó</td>
 </tr>
 </tbody>
 </table>
@@ -2946,40 +2949,27 @@ Max egybefüggő 5 nap | Max. havi 15 nap
 </table>
 </div>
 <div class="alert-box">
-<strong>📊 EFO órabér kalkulátor</strong>
+<strong>📊 EFO minimális órabér kalkulátor</strong>
 </div>
 
 <!-- EFO ÓRABÉR KALKULÁTOR -->
 <div style="background: linear-gradient(135deg, #26A69A 0%, #00897B 100%); padding: 18px; border-radius: 10px; margin: 15px 0;">
-<div style="color: white; font-weight: bold; font-size: 1.05em; margin-bottom: 4px;">⚡ EFO órabér kalkulátor</div>
-<div style="color: rgba(255,255,255,0.8); font-size: 0.82em; margin-bottom: 14px;">Számítsd ki a napi bért és közterheket órabér alapján</div>
-
-<!-- Foglalkoztatás típusa -->
-<div style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
-<div style="color: white; font-weight: bold; font-size: 0.9em; margin-bottom: 8px;">Foglalkoztatás típusa</div>
-<div style="display: flex; gap: 8px;">
-<button id="efo-btn-alkalmi" onclick="efoSetTipus('alkalmi')"
-style="flex: 1; padding: 8px; border: 2px solid white; border-radius: 6px; background: white; color: #26A69A; font-weight: bold; font-size: 0.9em; cursor: pointer;">
-💼 Alkalmi munka (4,2%)
-</button>
-<button id="efo-btn-turisztikai" onclick="efoSetTipus('turisztikai')"
-style="flex: 1; padding: 8px; border: 2px solid rgba(255,255,255,0.4); border-radius: 6px; background: transparent; color: white; font-weight: bold; font-size: 0.9em; cursor: pointer;">
-🏖️ Turisztikai (2,1%)
-</button>
-</div>
-</div>
+<div style="color: white; font-weight: bold; font-size: 1.05em; margin-bottom: 4px;">⚡ EFO minimális órabér kalkulátor</div>
+<div style="color: rgba(255,255,255,0.8); font-size: 0.82em; margin-bottom: 14px;">Számítsd ki a napi minimális bruttó bért EFO órabér alapján</div>
 
 <!-- Szakképzettség -->
 <div style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
 <div style="color: white; font-weight: bold; font-size: 0.9em; margin-bottom: 8px;">Szakképzettség</div>
 <div style="display: flex; gap: 8px;">
 <button id="efo-btn-nem-szakkepzett" onclick="efoSetSzakkepzettseg('nem')"
-style="flex: 1; padding: 8px; border: 2px solid white; border-radius: 6px; background: white; color: #26A69A; font-weight: bold; font-size: 0.9em; cursor: pointer;">
-👤 Nem szakképzett
+style="flex: 1; padding: 10px; border: 2px solid white; border-radius: 6px; background: white; color: #26A69A; font-weight: bold; font-size: 0.9em; cursor: pointer;">
+👤 Nem szakképzett<br>
+<span style="font-size: 0.85em;">1 578 Ft/óra</span>
 </button>
 <button id="efo-btn-szakkepzett" onclick="efoSetSzakkepzettseg('igen')"
-style="flex: 1; padding: 8px; border: 2px solid rgba(255,255,255,0.4); border-radius: 6px; background: transparent; color: white; font-weight: bold; font-size: 0.9em; cursor: pointer;">
-🎓 Szakképzett
+style="flex: 1; padding: 10px; border: 2px solid rgba(255,255,255,0.4); border-radius: 6px; background: transparent; color: white; font-weight: bold; font-size: 0.9em; cursor: pointer;">
+🎓 Szakképzett<br>
+<span style="font-size: 0.85em;">1 866 Ft/óra</span>
 </button>
 </div>
 </div>
@@ -2987,7 +2977,7 @@ style="flex: 1; padding: 8px; border: 2px solid rgba(255,255,255,0.4); border-ra
 <!-- Ledolgozott órák -->
 <div style="background: rgba(255,255,255,0.1); padding: 12px; border-radius: 8px; margin-bottom: 12px;">
 <label style="color: white; font-weight: bold; font-size: 0.9em; display: block; margin-bottom: 8px;">Ledolgozott órák száma</label>
-<input type="number" id="efo-orak" min="1" max="24" step="0.5" value="8" placeholder="8"
+<input type="number" id="efo-orak" min="0.5" max="24" step="0.5" value="8" placeholder="8"
 style="width: 100%; padding: 10px 12px; border: none; border-radius: 6px; font-size: 1.1em; font-weight: bold; text-align: center;"
 oninput="efoSzamol()">
 <div style="color: rgba(255,255,255,0.7); font-size: 0.75em; margin-top: 6px; text-align: center;">
@@ -2995,38 +2985,35 @@ Fél órás lépésekkel (0.5, 1, 1.5, 2...)
 </div>
 </div>
 
-<!-- Eredmények -->
-<div style="background: rgba(255,255,255,0.15); border-radius: 8px; padding: 14px;">
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
-<div>
-<div style="color: rgba(255,255,255,0.8); font-size: 0.75em;">Minimális órabér</div>
-<div style="color: white; font-size: 1.2em; font-weight: bold;" id="efo-oraber">1 785 Ft/óra</div>
+<!-- Eredmény -->
+<div style="background: rgba(255,255,255,0.15); border-radius: 8px; padding: 16px;">
+<div style="text-align: center; margin-bottom: 12px;">
+<div style="color: rgba(255,255,255,0.8); font-size: 0.85em; margin-bottom: 4px;">Minimális órabér</div>
+<div style="color: white; font-size: 1.4em; font-weight: bold;" id="efo-oraber">1 578 Ft/óra</div>
 </div>
-<div>
-<div style="color: rgba(255,255,255,0.8); font-size: 0.75em;">Közteher %</div>
-<div style="color: white; font-size: 1.2em; font-weight: bold;" id="efo-kozteher-szazalek">4,2%</div>
+<div style="border-top: 1px solid rgba(255,255,255,0.3); padding-top: 12px;">
+<div style="text-align: center; padding: 14px; background: rgba(255,255,255,0.2); border-radius: 8px;">
+<div style="color: rgba(255,255,255,0.85); font-size: 0.9em; margin-bottom: 6px;">💰 Napi minimális bruttó bér</div>
+<div style="color: #A5D6A7; font-size: 1.8em; font-weight: bold;" id="efo-napi-ber">12 624 Ft</div>
 </div>
 </div>
-<div style="border-top: 1px solid rgba(255,255,255,0.3); padding-top: 12px; margin-top: 12px;">
-<div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-<span style="color: rgba(255,255,255,0.85); font-size: 0.9em;">💰 Napi bruttó bér:</span>
-<span style="color: white; font-weight: bold; font-size: 1.1em;" id="efo-brutto">14 280 Ft</span>
 </div>
-<div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
-<span style="color: rgba(255,255,255,0.85); font-size: 0.9em;">🏛️ EFO közteher:</span>
-<span style="color: white; font-weight: bold; font-size: 1.1em;" id="efo-kozteher">600 Ft</span>
+
+<!-- Infó - EFO közteher -->
+<div style="margin-top: 14px; background: rgba(255,255,255,0.1); border-radius: 8px; padding: 12px;">
+<div style="color: white; font-weight: bold; font-size: 0.85em; margin-bottom: 8px;">📊 EFO napi közterhek (fizetendő):</div>
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+<div style="background: rgba(255,255,255,0.15); padding: 8px; border-radius: 6px; text-align: center;">
+<div style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Alkalmi munka</div>
+<div style="color: white; font-weight: bold; font-size: 1.1em;">4 800 Ft/nap</div>
 </div>
-<div style="display: flex; justify-content: space-between; margin-bottom: 8px; padding-top: 8px; border-top: 1px solid rgba(255,255,255,0.3);">
-<span style="color: rgba(255,255,255,0.85); font-size: 0.9em;">💼 Munkáltató összköltsége:</span>
-<span style="color: #FFD54F; font-weight: bold; font-size: 1.2em;" id="efo-osszkoltseg">14 880 Ft</span>
+<div style="background: rgba(255,255,255,0.15); padding: 8px; border-radius: 6px; text-align: center;">
+<div style="color: rgba(255,255,255,0.7); font-size: 0.75em;">Mezőgazd./Turisztikai</div>
+<div style="color: white; font-weight: bold; font-size: 1.1em;">2 400 Ft/nap</div>
 </div>
-<div style="display: flex; justify-content: space-between; padding: 10px; background: rgba(255,255,255,0.2); border-radius: 6px; margin-top: 10px;">
-<span style="color: white; font-weight: bold; font-size: 0.95em;">✅ Munkavállaló nettója:</span>
-<span style="color: #A5D6A7; font-weight: bold; font-size: 1.3em;" id="efo-netto">14 280 Ft</span>
 </div>
-<div style="color: rgba(255,255,255,0.7); font-size: 0.75em; margin-top: 8px; text-align: center;">
-⚡ Nincs SZJA és járuléklevonás!
-</div>
+<div style="color: rgba(255,255,255,0.7); font-size: 0.72em; margin-top: 8px; text-align: center;">
+⚠️ A közteher a munkáltatót terheli, független a ledolgozott óráktól
 </div>
 </div>
 </div>
@@ -3400,7 +3387,7 @@ document.getElementById('afa-brutto-result').textContent = brutto.toLocaleString
 // --- ÁFA KALKULATOR VÉGE ---
 // --- CÉGAUTÓADÓ KALKULATOR ---
 let cegautoKorny = '0-4'; // '0-4', '5', vagy '6-10'
-// Adó táblázat: [teljesítmény_kategória][környezetvédelmi_osztály]
+// Adó táblázat HAVI összegek: [teljesítmény_kategória][környezetvédelmi_osztály]
 const cegautoAdoTabla = {
   '0-50': { '0-4': 38500, '5': 20000, '6-10': 17500 },
   '51-90': { '0-4': 51000, '5': 25000, '6-10': 20000 },
@@ -3443,11 +3430,11 @@ function cegautoSzámol() {
     kategoria = '120+';
     kategoriaText = '120+ kW';
   }
-  // Éves adó lekérése
-  const evesAdo = cegautoAdoTabla[kategoria][cegautoKorny];
-  const haviAdo = Math.round(evesAdo / 12);
-  document.getElementById('cegauto-eves').textContent = evesAdo.toLocaleString('hu-HU') + ' Ft';
+  // Havi adó lekérése, éves = havi × 12
+  const haviAdo = cegautoAdoTabla[kategoria][cegautoKorny];
+  const evesAdo = haviAdo * 12;
   document.getElementById('cegauto-havi').textContent = haviAdo.toLocaleString('hu-HU') + ' Ft';
+  document.getElementById('cegauto-eves').textContent = evesAdo.toLocaleString('hu-HU') + ' Ft';
   document.getElementById('cegauto-kategoria').textContent = kategoriaText;
 }
 // --- CÉGAUTÓADÓ KALKULATOR VÉGE ---
@@ -3656,42 +3643,13 @@ function elhatárolSzámol() {
 }
 // --- ELHATÁROLÁS KALKULÁTOR VÉGE ---
 
-// --- EFO ÓRABÉR KALKULÁTOR ---
-let efoTipus = 'alkalmi'; // alapértelmezett: alkalmi munka (4,2%)
+// --- EFO MINIMÁLIS ÓRABÉR KALKULÁTOR ---
 let efoSzakkepzett = false; // alapértelmezett: nem szakképzett
 
-const efoAdatok = {
-  alkalmi: { kozteher: 0.042, nev: 'Alkalmi munka', minBerNap: 13600 },
-  turisztikai: { kozteher: 0.021, nev: 'Turisztikai idénymunka', minBerNap: 6800 }
+const efoOraberek = {
+  nemSzakkepzett: 1578, // 2026-os minimális órabér
+  szakkepzett: 1866      // 2026-os szakképzett minimális órabér
 };
-
-const oraberek = {
-  nemSzakkepzett: 1785, // 291 000 Ft / 163 óra
-  szakkepzett: 2283      // 387 000 Ft / 169,33 óra
-};
-
-function efoSetTipus(tipus) {
-  efoTipus = tipus;
-  
-  // Gombok színezése
-  if (tipus === 'alkalmi') {
-    document.getElementById('efo-btn-alkalmi').style.background = 'white';
-    document.getElementById('efo-btn-alkalmi').style.color = '#26A69A';
-    document.getElementById('efo-btn-alkalmi').style.borderColor = 'white';
-    document.getElementById('efo-btn-turisztikai').style.background = 'transparent';
-    document.getElementById('efo-btn-turisztikai').style.color = 'white';
-    document.getElementById('efo-btn-turisztikai').style.borderColor = 'rgba(255,255,255,0.4)';
-  } else {
-    document.getElementById('efo-btn-turisztikai').style.background = 'white';
-    document.getElementById('efo-btn-turisztikai').style.color = '#26A69A';
-    document.getElementById('efo-btn-turisztikai').style.borderColor = 'white';
-    document.getElementById('efo-btn-alkalmi').style.background = 'transparent';
-    document.getElementById('efo-btn-alkalmi').style.color = 'white';
-    document.getElementById('efo-btn-alkalmi').style.borderColor = 'rgba(255,255,255,0.4)';
-  }
-  
-  efoSzamol();
-}
 
 function efoSetSzakkepzettseg(szakkepzett) {
   efoSzakkepzett = (szakkepzett === 'igen');
@@ -3718,29 +3676,21 @@ function efoSetSzakkepzettseg(szakkepzett) {
 
 function efoSzamol() {
   const orak = parseFloat(document.getElementById('efo-orak').value) || 8;
-  const oraber = efoSzakkepzett ? oraberek.szakkepzett : oraberek.nemSzakkepzett;
-  const adatok = efoAdatok[efoTipus];
+  const oraber = efoSzakkepzett ? efoOraberek.szakkepzett : efoOraberek.nemSzakkepzett;
   
-  // Számítások
-  const brutto = Math.round(orak * oraber);
-  const kozteher = Math.round(brutto * adatok.kozteher);
-  const osszkoltseg = brutto + kozteher;
-  const netto = brutto; // EFO-nál nincs levonás
+  // Számítás
+  const napiBer = Math.round(orak * oraber);
   
   // Megjelenítés
   document.getElementById('efo-oraber').textContent = oraber.toLocaleString('hu-HU') + ' Ft/óra';
-  document.getElementById('efo-kozteher-szazalek').textContent = (adatok.kozteher * 100).toFixed(1).replace('.', ',') + '%';
-  document.getElementById('efo-brutto').textContent = brutto.toLocaleString('hu-HU') + ' Ft';
-  document.getElementById('efo-kozteher').textContent = kozteher.toLocaleString('hu-HU') + ' Ft';
-  document.getElementById('efo-osszkoltseg').textContent = osszkoltseg.toLocaleString('hu-HU') + ' Ft';
-  document.getElementById('efo-netto').textContent = netto.toLocaleString('hu-HU') + ' Ft';
+  document.getElementById('efo-napi-ber').textContent = napiBer.toLocaleString('hu-HU') + ' Ft';
 }
 
 // Kezdeti számítás betöltéskor
 if (document.getElementById('efo-orak')) {
   efoSzamol();
 }
-// --- EFO ÓRABÉR KALKULÁTOR VÉGE ---
+// --- EFO MINIMÁLIS ÓRABÉR KALKULÁTOR VÉGE ---
 function számolÁFA() {
 const input = document.getElementById('afa-indulas-dátum');
 const eredmenyDiv = document.getElementById('afa-eredmeny');
