@@ -498,16 +498,19 @@ margin-left: auto !important;
 margin-right: auto !important;
 }
 .category-card.active .category-content {
-position: relative;
+position: fixed;
 left: 50%;
+top: 150px;
 transform: translateX(-50%);
-width: calc(100vw - 100px);
-max-width: 1300px;
+width: 950px;
+max-width: calc(100vw - 80px);
 background: white;
-padding: 30px;
+padding: 25px;
 border-radius: 12px;
 box-shadow: 0 10px 40px rgba(0,0,0,0.15);
-box-sizing: border-box;
+z-index: 1000;
+max-height: calc(100vh - 200px);
+overflow-y: auto;
 }
 }
 .quick-facts {
