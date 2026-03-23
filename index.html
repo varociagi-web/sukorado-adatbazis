@@ -3210,12 +3210,16 @@ Tartós megbízási jogviszony új fogalom. Kizárólag mezőgazdasági idénymu
 <script>
 function toggleCategory(card) {
 const isActive = card.classList.contains('active');
-// Close all other cards
+// Close all OTHER cards (not the clicked one)
 document.querySelectorAll('.category-card').forEach(c => {
+if (c !== card) {
 c.classList.remove('active');
+}
 });
 // Toggle current card
-if (!isActive) {
+if (isActive) {
+card.classList.remove('active');
+} else {
 card.classList.add('active');
 }
 }
