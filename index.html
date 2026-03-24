@@ -490,47 +490,41 @@ font-size: 0.8em;
 font-size: 1.1em;
 }
 }
-/* Desktop - wide képernyőkön a tartalom középre, max 900px */
+/* Desktop - Popup overlay megoldás (villogásmentes) */
 @media (min-width: 769px) {
-.category-content {
-max-width: 900px !important;
-margin-left: auto !important;
-margin-right: auto !important;
-transition: opacity 0.3s ease, transform 0.3s ease;
-}
-/* Overlay háttér */
-.category-card.active::before {
-content: '';
+#desktop-popup-overlay {
 position: fixed;
 top: 0;
 left: 0;
 right: 0;
 bottom: 0;
-background: rgba(0, 0, 0, 0.3);
+background: rgba(0, 0, 0, 0.4);
 z-index: 999;
-pointer-events: none;
-animation: fadeIn 0.2s ease;
+display: none;
+opacity: 0;
+transition: opacity 0.2s ease;
 }
-@keyframes fadeIn {
-from { opacity: 0; }
-to { opacity: 1; }
+#desktop-popup-overlay.show {
+display: block;
+opacity: 1;
 }
-.category-card.active .category-content {
-position: fixed !important;
-top: 50% !important;
-left: 50% !important;
-transform: translate(-50%, -50%) !important;
-width: 1100px !important;
-max-width: calc(100vw - 60px) !important;
-max-height: 90vh !important;
-overflow-y: auto !important;
+#desktop-popup-content {
+position: fixed;
+top: 50%;
+left: 50%;
+transform: translate(-50%, -50%);
+width: 1100px;
+max-width: calc(100vw - 60px);
+max-height: 90vh;
+overflow-y: auto;
 background: white;
-padding: 30px !important;
+padding: 30px;
 border-radius: 12px;
-box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-z-index: 1000 !important;
-pointer-events: auto !important;
-opacity: 1 !important;
+box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+z-index: 1000;
+}
+.category-card {
+cursor: pointer;
 }
 }
 .quick-facts {
@@ -3229,6 +3223,20 @@ Tartós megbízási jogviszony új fogalom. Kizárólag mezőgazdasági idénymu
 </div>
 <script>
 function toggleCategory(card) {
+// Desktop popup logika
+if (window.innerWidth >= 769) {
+const content = card.querySelector('.category-content');
+if (content) {
+const overlay = document.getElementById('desktop-popup-overlay');
+const popupContent = document.getElementById('desktop-popup-content');
+// Tartalom másolása
+popupContent.innerHTML = content.innerHTML;
+// Popup megjelenítése
+overlay.classList.add('show');
+}
+return;
+}
+// Mobil logika (régi működés)
 const isActive = card.classList.contains('active');
 // Close all OTHER cards (not the clicked one)
 document.querySelectorAll('.category-card').forEach(c => {
@@ -3243,6 +3251,18 @@ card.classList.remove('active');
 card.classList.add('active');
 }
 }
+function closeDesktopPopup() {
+const overlay = document.getElementById('desktop-popup-overlay');
+if (overlay) {
+overlay.classList.remove('show');
+}
+}
+// ESC billentyű kezelés
+document.addEventListener('keydown', function(e) {
+if (e.key === 'Escape') {
+closeDesktopPopup();
+}
+});
 function quickNav(keyword) {
 const cards = document.querySelectorAll('.category-card');
 for (const card of cards) {
@@ -3915,5 +3935,12 @@ felulGomb.style.display = (window.scrollY > 400) ? 'block' : 'none';
 <p style="color: #666; font-size: 0.9em; margin: 0;">Készítette: <strong style="color: #A0714F;">Váróci Ágnes</strong></p>
 <p style="color: #999; font-size: 0.8em; margin: 5px 0 0 0;">SukorADÓ Könyvelőiroda | 2026</p>
 </footer>
+<!-- Desktop Popup Overlay -->
+<div id="desktop-popup-overlay" onclick="closeDesktopPopup()">
+  <div id="desktop-popup-content" onclick="event.stopPropagation()">
+    <!-- IDE kerül a kártya tartalma dinamikusan -->
+  </div>
+</div>
+
 </body>
 </html>
