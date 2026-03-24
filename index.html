@@ -496,6 +496,7 @@ font-size: 1.1em;
 max-width: 900px !important;
 margin-left: auto !important;
 margin-right: auto !important;
+transition: opacity 0.3s ease, transform 0.3s ease;
 }
 /* Overlay háttér */
 .category-card.active::before {
@@ -507,6 +508,12 @@ right: 0;
 bottom: 0;
 background: rgba(0, 0, 0, 0.3);
 z-index: 999;
+pointer-events: none;
+animation: fadeIn 0.2s ease;
+}
+@keyframes fadeIn {
+from { opacity: 0; }
+to { opacity: 1; }
 }
 .category-card.active .category-content {
 position: fixed !important;
@@ -522,6 +529,8 @@ padding: 30px !important;
 border-radius: 12px;
 box-shadow: 0 20px 60px rgba(0,0,0,0.3);
 z-index: 1000 !important;
+pointer-events: auto !important;
+opacity: 1 !important;
 }
 }
 .quick-facts {
