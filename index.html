@@ -3229,10 +3229,18 @@ const content = card.querySelector('.category-content');
 if (content) {
 const overlay = document.getElementById('desktop-popup-overlay');
 const popupContent = document.getElementById('desktop-popup-content');
-// Tartalom másolása
-popupContent.innerHTML = content.innerHTML;
-// Event delegation beállítása a popup-ban lévő lenyílókhoz
-attachPopupEventListeners();
+
+// MOZGATJUK a tartalmat (nem másoljuk!) - így minden event és változó megmarad
+if (!content._originalParent) {
+content._originalParent = card;
+}
+popupContent.appendChild(content);
+
+// CSS feloldása hogy látható legyen a popup-ban
+content.style.maxHeight = 'none';
+content.style.overflow = 'visible';
+content.style.display = 'block';
+
 // Popup megjelenítése
 overlay.classList.add('show');
 }
@@ -3253,67 +3261,20 @@ card.classList.remove('active');
 card.classList.add('active');
 }
 }
-function attachPopupEventListeners() {
-const popupContent = document.getElementById('desktop-popup-content');
-
-// 1. Lenyíló triggerek
-popupContent.querySelectorAll('[onclick*="toggleSubSection"]').forEach(trigger => {
-const onclickAttr = trigger.getAttribute('onclick');
-const match = onclickAttr.match(/toggleSubSection\(['"]([^'"]+)['"]\)/);
-if (match) {
-const sectionId = match[1];
-trigger.onclick = function(e) {
-e.stopPropagation();
-toggleSubSectionInPopup(sectionId);
-};
-}
-});
-
-// 2. Input mezők oninput/onchange event-jei
-popupContent.querySelectorAll('input[oninput], input[onchange], select[onchange]').forEach(input => {
-const oninputAttr = input.getAttribute('oninput');
-const onchangeAttr = input.getAttribute('onchange');
-
-// oninput kezelése
-if (oninputAttr) {
-const funcMatch = oninputAttr.match(/(\w+)\s*\(/);
-if (funcMatch) {
-const funcName = funcMatch[1];
-if (typeof window[funcName] === 'function') {
-input.oninput = window[funcName];
-}
-}
-}
-// onchange kezelése
-if (onchangeAttr) {
-const funcMatch = onchangeAttr.match(/(\w+)\s*\(/);
-if (funcMatch) {
-const funcName = funcMatch[1];
-if (typeof window[funcName] === 'function') {
-input.onchange = window[funcName];
-}
-}
-}
-});
-}
-function toggleSubSectionInPopup(id) {
-const popupContent = document.getElementById('desktop-popup-content');
-const section = popupContent.querySelector('#' + id);
-if (!section) return;
-// Keressük a trigger div-et (az előző testvér)
-const trigger = section.previousElementSibling;
-const arrow = trigger ? trigger.querySelector('.data-label span:last-child') : null;
-if (section.style.display === 'none' || section.style.display === '') {
-section.style.display = 'block';
-if (arrow) arrow.textContent = '▲';
-} else {
-section.style.display = 'none';
-if (arrow) arrow.textContent = '▼';
-}
-}
 function closeDesktopPopup() {
 const overlay = document.getElementById('desktop-popup-overlay');
+const popupContent = document.getElementById('desktop-popup-content');
 if (overlay) {
+// Visszamozgatjuk a tartalmat az eredeti helyére
+const content = popupContent.querySelector('.category-content');
+if (content && content._originalParent) {
+// CSS visszaállítása
+content.style.maxHeight = '';
+content.style.overflow = '';
+content.style.display = '';
+// Visszamozgatás
+content._originalParent.appendChild(content);
+}
 overlay.classList.remove('show');
 }
 }
