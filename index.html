@@ -659,6 +659,14 @@ oninput="bérkalkResetBruttó()">
 <div id="bk-arányos-minbér" style="background: rgba(255,255,255,0.15); color: white; padding: 8px 10px; border-radius: 6px; font-size: 0.95em; margin-top: 3px; font-weight: bold;"></div>
 </div>
 </div>
+<!-- Szakképzett checkbox -->
+<div style="margin-top: 5px;">
+<label style="color: white; font-size: 0.9em; display: flex; align-items: center; gap: 8px; cursor: pointer;">
+<input type="checkbox" id="bk-szakképzett" onchange="bérkalkResetBruttó()" 
+style="width: 18px; height: 18px; cursor: pointer; accent-color: white;">
+<span>Szakképzett dolgozó (garantált bérminimum: 373 200 Ft/hó)</span>
+</label>
+</div>
 <!-- Bruttó bér input -->
 <div id="bk-brutto-group">
 <label style="color: rgba(255,255,255,0.85); font-size: 0.8em;">Bruttó bér (Ft/hó)</label>
@@ -3336,7 +3344,9 @@ if (bkMode === 'brutto') bérkalkSzámol(); else bérkalkSzámolFromNettó();
 }
 function bérkalkResetBruttó() {
 const ora = parseFloat(document.getElementById('bk-ora').value) || 40;
-const arányosMin = Math.round(322800 * (ora / 40));
+const szakképzett = document.getElementById('bk-szakképzett').checked;
+const alap = szakképzett ? 373200 : 322800; // Garantált bérminimum (2026) vagy minimálbér
+const arányosMin = Math.round(alap * (ora / 40));
 document.getElementById('bk-arányos-minbér').textContent = arányosMin.toLocaleString('hu-HU') + ' Ft';
 document.getElementById('bk-brutto').value = arányosMin;
 bérkalkSzámol();
@@ -3344,7 +3354,9 @@ bérkalkSzámol();
 function bérkalkSzámol() {
 const brutto = parseFloat(document.getElementById('bk-brutto').value) || 0;
 const ora = parseFloat(document.getElementById('bk-ora').value) || 40;
-const arányosMin = Math.round(322800 * (ora / 40));
+const szakképzett = document.getElementById('bk-szakképzett').checked;
+const alap = szakképzett ? 373200 : 322800; // 2026-os értékek
+const arányosMin = Math.round(alap * (ora / 40));
 document.getElementById('bk-arányos-minbér').textContent = arányosMin.toLocaleString('hu-HU') + ' Ft';
 const szja = Math.round(brutto * 0.15);
 const tb = Math.round(brutto * 0.185);
@@ -3371,7 +3383,9 @@ const netto = parseFloat(document.getElementById('bk-netto-input').value) || 0;
 const brutto = Math.round(netto / 0.665);
 // Most számoljuk ki az eredményt
 const ora = parseFloat(document.getElementById('bk-ora').value) || 40;
-const arányosMin = Math.round(322800 * (ora / 40));
+const szakképzett = document.getElementById('bk-szakképzett').checked;
+const alap = szakképzett ? 373200 : 322800; // 2026-os értékek
+const arányosMin = Math.round(alap * (ora / 40));
 document.getElementById('bk-arányos-minbér').textContent = arányosMin.toLocaleString('hu-HU') + ' Ft';
 const szja = Math.round(brutto * 0.15);
 const tb = Math.round(brutto * 0.185);
