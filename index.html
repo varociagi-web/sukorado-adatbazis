@@ -3255,18 +3255,44 @@ card.classList.add('active');
 }
 function attachPopupEventListeners() {
 const popupContent = document.getElementById('desktop-popup-content');
-// Keresünk minden lenyíló triggerét
+
+// 1. Lenyíló triggerek
 popupContent.querySelectorAll('[onclick*="toggleSubSection"]').forEach(trigger => {
-// Kivesszük az id-t az onclick attribútumból
 const onclickAttr = trigger.getAttribute('onclick');
 const match = onclickAttr.match(/toggleSubSection\(['"]([^'"]+)['"]\)/);
 if (match) {
 const sectionId = match[1];
-// Hozzáadunk új event listener-t
 trigger.onclick = function(e) {
 e.stopPropagation();
 toggleSubSectionInPopup(sectionId);
 };
+}
+});
+
+// 2. Input mezők oninput/onchange event-jei
+popupContent.querySelectorAll('input[oninput], input[onchange], select[onchange]').forEach(input => {
+const oninputAttr = input.getAttribute('oninput');
+const onchangeAttr = input.getAttribute('onchange');
+
+// oninput kezelése
+if (oninputAttr) {
+const funcMatch = oninputAttr.match(/(\w+)\s*\(/);
+if (funcMatch) {
+const funcName = funcMatch[1];
+if (typeof window[funcName] === 'function') {
+input.oninput = window[funcName];
+}
+}
+}
+// onchange kezelése
+if (onchangeAttr) {
+const funcMatch = onchangeAttr.match(/(\w+)\s*\(/);
+if (funcMatch) {
+const funcName = funcMatch[1];
+if (typeof window[funcName] === 'function') {
+input.onchange = window[funcName];
+}
+}
 }
 });
 }
