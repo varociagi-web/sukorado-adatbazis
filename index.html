@@ -845,6 +845,59 @@ ebből szocho (13%): 41 964 Ft</div>
 <div class="data-note">ebből társ.bizt.járulék (18,5%): 69 042 Ft<br>
 ebből szocho (13%): 48 516 Ft</div>
 </div>
+
+<div class="alert-box">
+<strong>🍼 Vállalkozók járulékfizetése ellátások mellett</strong>
+</div>
+
+<div class="data-item" style="background: #E8F5E9; border-left: 4px solid #4CAF50;">
+<div class="data-label">✅ GYED alatt</div>
+<div class="data-value">NEM kötelező minimálbér után</div>
+<div class="data-note">Csak a tényleges jövedelem (vállalkozói kivét / tagi jövedelem) után kell járulékot fizetni. Ha nincs jövedelem → nincs járulékfizetés.</div>
+</div>
+
+<div class="data-item" style="background: #FFF3CD; border-left: 4px solid #FFC107;">
+<div class="data-label">⚠️ GYES alatt</div>
+<div class="data-value">FELTÉTELESEN kötelező</div>
+<div class="data-note"><strong>Társas vállalkozó esetén:</strong> CSAK akkor kötelező minimálbér után járulék, ha van személyes közreműködés! Ha NEM folytatja személyesen a tevékenységet → nem kötelező minimálbér után.<br><br><strong>Egyéni vállalkozó esetén:</strong> Hasonló szabály - ha személyesen folytatja a tevékenységet, kötelező minimálbér után. Egyébként csak tényleges jövedelem után.</div>
+</div>
+
+<div class="data-item" style="background: #E8F5E9; border-left: 4px solid #4CAF50;">
+<div class="data-label">✅ GYET alatt (3+ gyerek)</div>
+<div class="data-value">NEM kötelező minimálbér után</div>
+<div class="data-note">Gyermeknevelési támogatás alatt csak tényleges jövedelem (vállalkozói kivét / tagi jövedelem) után kell járulékot fizetni.</div>
+</div>
+
+<div class="data-item" style="background: #E3F2FD; border-left: 4px solid #2196F3;">
+<div class="data-label">ℹ️ 2026-tól új szabály</div>
+<div class="data-value">2+ ellátás együtt</div>
+<div class="data-note">Ha GYET + GYOD + ápolási díj közül legalább 2 ellátásban részesül → járulékalap csak a tényleges jövedelem (nem kötelező minimálbér után).</div>
+</div>
+
+<div class="alert-box">
+<strong>👨‍👩‍👧‍👦 Családi járulékkedvezmény korlátja</strong>
+</div>
+
+<div class="data-item" style="background: #FFEBEE; border-left: 4px solid #f44336;">
+<div class="data-label">⚠️ FONTOS korlát</div>
+<div class="data-value">Csak tényleges jövedelem után</div>
+<div class="data-note">A családi járulékkedvezmény <strong>CSAK a ténylegesen kifizetett jövedelem (vállalkozói kivét / tagi jövedelem) TB-járulékára</strong> alkalmazható!<br><br>NEM vonatkozik a minimálbér és a tényleges jövedelem közötti különbözet után fizetett járulékra.</div>
+</div>
+
+<div class="alert-box" style="background: #E8F5E9; border-left: 4px solid #4CAF50;">
+<strong>💡 Példa</strong>
+</div>
+<div class="data-item">
+<div class="data-label">Számítási példa</div>
+<div class="data-value">Tényleges jövedelem: 200 000 Ft</div>
+<div class="data-note">
+• Minimálbér utáni TB-járulék: 322 800 × 18,5% = 59 718 Ft<br>
+• Tényleges jövedelem TB-járuléka: 200 000 × 18,5% = 37 000 Ft<br>
+• <strong>Családi kedvezmény max 37 000 Ft-ra alkalmazható</strong><br>
+• A fennmaradó 22 718 Ft (59 718 - 37 000) után NEM érvényesíthető a kedvezmény
+</div>
+</div>
+
 </div>
 </div>
 <!-- Átalányadózás -->
@@ -1201,15 +1254,60 @@ onchange="számolÁtalány()" oninput="számolÁtalány()">
 <strong>📋 Veszteség elhatárolás</strong>
 </div>
 <div class="data-item">
-<div class="data-label">Előre</div>
-<div class="data-value">Korlátlan</div>
-<div class="data-note">A keletkező veszteség korlátlanul előre vihető</div>
+<div class="data-label">Elhatárolt veszteség fogalma</div>
+<div class="data-value">Negatív adóalap előre vitele</div>
+<div class="data-note">Ha az adóalap bármely adóévben negatív, ezzel az összeggel a következő 5 adóévben, döntés szerinti megosztásban csökkenthető az adózás előtti eredmény (feltéve: rendeltetésszerű joggyakorlás)</div>
 </div>
 <div class="data-item">
-<div class="data-label">Hátra</div>
-<div class="data-value">5 év</div>
-<div class="data-note">Legfeljebb 5 adóévre hátra vihető</div>
+<div class="data-label">Felhasználás módja</div>
+<div class="data-value">FIFO + max 50% korlát</div>
+<div class="data-note">Keletkezés sorrendjében (FIFO). Évente max az adóalap 50%-áig. Change of control esetén további korlátok.</div>
 </div>
+<div class="data-item">
+<div class="data-label">Időbeli korlát (2015-től keletkezett)</div>
+<div class="data-value">5 év</div>
+<div class="data-note">Keletkezés évét követő 5. adóévig felhasználható (2015.01.01-től keletkezett veszteségekre)</div>
+</div>
+<div class="data-item" style="background: #FFF3CD; border-left: 4px solid #FFC107;">
+<div class="data-label">⚠️ Átmeneti szabály</div>
+<div class="data-value">2004-2014 közötti veszteségek</div>
+<div class="data-note">Korlátlanul voltak felhasználhatók, de 2018-tól: 2030.12.31-ig kell felhasználni</div>
+</div>
+<div class="data-item" style="background: #E3F2FD; border-left: 4px solid #2196F3;">
+<div class="data-label">ℹ️ Speciális esetek</div>
+<div class="data-value">Átalakulás, csoportos adóalany</div>
+<div class="data-note">Átalakulással szerzett veszteségek és csoportos társasági adóalanyiság esetén speciális szabályok</div>
+</div>
+
+<div class="alert-box">
+<strong>💰 Fejlesztési tartalék</strong>
+</div>
+<div class="data-item">
+<div class="data-label">Képzés</div>
+<div class="data-value">Pozitív adóalap terhére</div>
+<div class="data-note">Az adóévben pozitív adózás előtti eredmény terhére, max az adóalap összegéig képezhető lekötött tartalék</div>
+</div>
+<div class="data-item">
+<div class="data-label">Felhasználási határidő</div>
+<div class="data-value">4 év</div>
+<div class="data-note">A képzés adóévét követő 4. adóév végéig kell beruházásra, felújításra fordítani</div>
+</div>
+<div class="data-item">
+<div class="data-label">Adóhatás</div>
+<div class="data-value">Adóalap csökkentés képzéskor</div>
+<div class="data-note">Képzéskor csökkenti az adóalapot → elhalasztott adófizetés. Felhasználáskor semleges (beruházás terv szerinti értékcsökkenése növeli az adóalapot)</div>
+</div>
+<div class="data-item" style="background: #FFEBEE; border-left: 4px solid #f44336;">
+<div class="data-label">⚠️ Szankció határidő mulasztáskor</div>
+<div class="data-value">Duplázott adó + kamat</div>
+<div class="data-note">Ha a 4 év alatt nem használják fel beruházásra: a tartalék kétszerese után 9% TAO + jegybanki alapkamat. Feloldás is adóalap növelő.</div>
+</div>
+<div class="data-item" style="background: #E3F2FD; border-left: 4px solid #2196F3;">
+<div class="data-label">ℹ️ Egyéb szabályok</div>
+<div class="data-value">Könyvviteli követelmények</div>
+<div class="data-note">Lekötött tartalékként kell kimutatni. Nyilvántartás kötelező: mikor képezték, mire fordították, mennyi a fennálló összeg</div>
+</div>
+
 <div class="alert-box">
 <strong>⚖️ TAO vs KIVA összehasonlítás</strong>
 </div>
@@ -2395,8 +2493,8 @@ Kelte: 2026.02.04<br>
 </div>
 <div class="data-item">
 <div class="data-label">Személyi kedvezmény</div>
-<div class="data-value">Teljes adóalap × 15%</div>
-<div class="data-note">Max/hó: 715 765 Ft (max adókedvezmény: 107 365 Ft)</div>
+<div class="data-value">Minimálbér 33,33%-a</div>
+<div class="data-note">2026: 322 800 Ft alapján → havi 107 600 Ft adóalap-csökkentés (nettó megtakarítás: 16 140 Ft)</div>
 </div>
 <div class="data-item">
 <div class="data-label">Adómentes munkabér előleg (max)</div>
@@ -3229,6 +3327,7 @@ Tartós megbízási jogviszony új fogalom. Kizárólag mezőgazdasági idénymu
 </div>
 </div>
 </div>
+
 <script>
 function toggleCategory(card) {
 // Desktop popup logika
